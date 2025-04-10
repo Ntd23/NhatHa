@@ -92,7 +92,7 @@
               <div class="form-group row">
                 <label class="col-form-label col-md-2">Sản phẩm xu hướng</label>
                 <div class="col-md-10 mt-2">
-                  <input type="checkbox" name="is_trendy" value="{{ !empty($product->is_trendy) ? 'checked' : '' }}">
+                  <input {{ !empty($product->is_trendy) ? 'checked' : '' }} name="is_trendy" type="checkbox">
                 </div>
               </div>
               <div class="form-group row">

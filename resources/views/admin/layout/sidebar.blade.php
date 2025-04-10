@@ -3,7 +3,7 @@
     <div id="sidebar-menu" class="sidebar-menu">
       <ul>
         <li class="@if (Request::segment(2) === 'dashboard') active @endif">
-          <a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+          <a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i> <span>Bảng điều khiển</span></a>
         </li>
         <li class="@if (Request::segment(2) === 'category') active @endif">
           <a href="{{ route('admin.category.index') }}"><i class="fa fa-user-md"></i> <span>Danh mục</span></a>
@@ -20,36 +20,20 @@
         <li class="@if (Request::segment(2) === 'discountcode') active @endif">
           <a href="{{route('admin.discountcode.index')}}"><i class="fa fa-bell-o"></i> <span>Mã giảm giá</span></a>
         </li>
-        <li>
-          <a href="settings.html"><i class="fa fa-cog"></i> <span>Settings</span></a>
+        <li class="@if (Request::segment(2) === 'shipping-charge') active @endif">
+          <a href="{{route('admin.shippingcharge.index')}}"><i class="fa fa-bell-o"></i> <span>Phí giao hàng</span></a>
         </li>
-        <li class="menu-title">UI Elements</li>
+        <li class="@if (Request::segment(2) === 'order') active @endif">
+          <a href="{{route('admin.order.index')}}"><i class="fa fa-bell-o"></i> <span>Đặt hàng</span></a>
+        </li>
+        <li class="menu-title">Cài đặt</li>
         <li class="submenu">
-          <a href="#"><i class="fa fa-laptop"></i> <span> Components</span> <span class="menu-arrow"></span></a>
+          <a href="#"><i class="fa fa-laptop"></i><span>Cài đặt</span> <span class="menu-arrow"></span></a>
           <ul style="display: none;">
-            <li><a href="uikit.html">UI Kit</a></li>
+            <li><a href="{{route('admin.payment_setting')}}">Thanh toán</a></li>
             <li><a href="typography.html">Typography</a></li>
             <li><a href="tabs.html">Tabs</a></li>
           </ul>
-        </li>
-        <li class="submenu">
-          <a href="#"><i class="fa fa-edit"></i> <span> Forms</span> <span class="menu-arrow"></span></a>
-          <ul style="display: none;">
-            <li><a href="form-basic-inputs.html">Basic Inputs</a></li>
-            <li><a href="form-input-groups.html">Input Groups</a></li>
-            <li><a href="form-horizontal.html">Horizontal Form</a></li>
-            <li><a href="form-vertical.html">Vertical Form</a></li>
-          </ul>
-        </li>
-        <li class="submenu">
-          <a href="#"><i class="fa fa-table"></i> <span> Tables</span> <span class="menu-arrow"></span></a>
-          <ul style="display: none;">
-            <li><a href="tables-basic.html">Basic Tables</a></li>
-            <li><a href="tables-datatables.html">Data Table</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="calendar.html"><i class="fa fa-calendar"></i> <span>Calendar</span></a>
         </li>
         <li class="menu-title">Extras</li>
         <li class="submenu">

@@ -3,7 +3,8 @@
   <div class="mobile-menu-wrapper">
     <span class="mobile-menu-close"><i class="icon-close"></i></span>
 
-    <form action="#" method="get" class="mobile-search">
+    <form action="{{route('front.search')}}" method="get" class="mobile-search">
+		{{csrf_field()}}
       <label for="mobile-search" class="sr-only">Search</label>
       <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..."
         required>
@@ -21,10 +22,10 @@
         @foreach ($getCategoryMobile as $value_m_c)
           @if (!empty($value_m_c->getSubCategory()->count()))
             <li>
-              <a href="{{ url($value_m_c->slug) }}">{{ $value_m_c->name }}</a>
+              <a href="{{route('front.category',$value_m_c->slug)}}">{{ $value_m_c->name }}</a>
               <ul>
                 @foreach ($value_m_c->getSubCategory() as $value_m_sub)
-                  <li><a href="{{ url($value_m_c->slug . '/' . $value_m_sub->slug) }}">{{ $value_m_sub->name }}</a></li>
+                  <li><a href="{{route('front.category',[$value_m_c->slug, $value_m_sub->slug])}}">{{ $value_m_sub->name }}</a></li>
                 @endforeach
               </ul>
             </li>

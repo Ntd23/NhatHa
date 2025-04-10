@@ -3,12 +3,13 @@
 
 <head>
 	@include('layout.css')
+	@yield('css')
 </head>
 
 <body>
 	<div class="page-wrapper">
 		@include('layout.header')
-		@include('layout.main')
+		@yield('content')
 		@include('layout.footer')
 	</div>
 	<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
@@ -100,7 +101,7 @@
 		</div>
 	</div>
 	@include('layout.script')
-
+	@yield('script')
 	{{-- functions other --}}
 	<script>
 		//register
