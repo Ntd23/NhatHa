@@ -1,6 +1,6 @@
 <footer class="footer footer-dark">
   <div class="cta bg-image bg-dark pt-4 pb-5 mb-0" style="background-image: url(assets/images/demos/demo-10/bg-2.jpg);">
-    <div class="container">
+    <div class="container" style="background:rgb(24, 23, 23);">
       <div class="row justify-content-center">
         <div class="col-sm-10 col-md-8 col-lg-6">
           <div class="cta-heading text-center">

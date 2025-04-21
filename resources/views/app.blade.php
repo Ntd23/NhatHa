@@ -3,12 +3,18 @@
 
 <head>
 	@include('layout.css')
+	@yield('css')
+	<style>
+		 .btn-wishlist-add::before {
+      content: '\f233' !important;
+    }
+	</style>
 </head>
 
 <body>
 	<div class="page-wrapper">
 		@include('layout.header')
-		@include('layout.main')
+		@yield('content')
 		@include('layout.footer')
 	</div>
 	<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
@@ -100,7 +106,7 @@
 		</div>
 	</div>
 	@include('layout.script')
-
+	@yield('script')
 	{{-- functions other --}}
 	<script>
 		//register
@@ -155,6 +161,23 @@
 						});
 					}
 				}
+			})
+		})
+		$('body').delegate('.add_to_wishlist','click',function() {
+			var product_id= $(this).attr('id')
+			$.ajax({
+				type:'POST',
+				url: '{{route('front.add_to_wishlist')}}',
+				data: {
+					'_token': '{{csrf_token()}}',
+					product_id: product_id,
+				},
+				dataType:'json',
+				success: function(data) {
+					if(data.is_wishlist==0) $('.add_to_wishlist'+product_id).removeClass('btn-wishlist-add')
+					else $('.add_to_wishlist'+product_id).addClass('btn-wishlist-add')
+				},
+				error: function(data) {}
 			})
 		})
 	</script>

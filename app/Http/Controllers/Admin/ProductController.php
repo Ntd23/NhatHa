@@ -88,6 +88,7 @@ class ProductController extends Controller
 	 */
 	public function update(Request $request, string $id)
 	{
+		// dd($request);
 		$product = Product::getSingle($id);
     if (!empty($product)) {
       //store product
