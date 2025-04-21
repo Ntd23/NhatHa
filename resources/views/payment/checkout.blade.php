@@ -22,7 +22,8 @@
     <div class="page-content">
         <div class="checkout">
             <div class="container">
-                <form action="#">
+                <form id="SubmitForm" method="post">
+								{{csrf_field()}}
                     <div class="row">
                         <div class="col-lg-9">
                             <h2 class="checkout-title">Thông tin giao hàng</h2>
@@ -75,7 +76,7 @@
                             @if (empty(Auth::check()))
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" name="is_create" class="custom-control-input createAccount" id="checkout-create-acc">
-                                <label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
+                                <label class="custom-control-label" for="checkout-create-acc">Tạo tài khoản?</label>
                             </div><!-- End .custom-checkbox -->
                             <div id="showPassword" style="display: none;">
                                 <label>Mật khẩu *</label>
@@ -115,7 +116,7 @@
                                                     <div class="input-group">
                                                         <input type="text" id="getDiscountCode" name="discount_code" class="form-control" placeholder="Mã giảm giá">
                                                         <div class="input-group-append">
-                                                            <button type="submit" id="ApplyDiscount" class="btn btn-primary" style="height: 40px;">
+                                                            <button type="button" id="ApplyDiscount" class="btn btn-primary" style="height: 40px;">
                                                                 <i class="icon-long-arrow-right"></i>
                                                             </button>
                                                         </div>
@@ -180,4 +181,66 @@
         </div><!-- End .checkout -->
     </div><!-- End .page-content -->
 </main>
+@endsection
+
+@section('script')
+<script>
+$('body').delegate('.createAccount','change', function() {
+	if(this.checked) {
+		$('#showPassword').show()
+		$('#inputPassword').prop('required',true)
+	}else{
+		$('#showPassword').hide()
+		$('#inputPassword').prop('required',false)
+	}
+})
+$('body').delegate('.getShippingCharge','change',function() {
+	var price= $(this).attr('data-price')
+	var total= $('#PayableTotal').val()
+	$('#getShippingCharge').html(price)
+	var final_total= parseFloat(price) +parseFloat(total)
+	$('#getPayableTotal').html(final_total.toFixed())
+})
+$('body').delegate('#ApplyDiscount','click',function() {
+	var discount_code= $('#getDiscountCode').val()
+	$.ajax({
+		type: 'POST',
+		url: '{{route('front.appy_discount_code')}}',
+		data: {
+			'_token':'{{csrf_token()}}',
+			discount_code: discount_code
+		},
+		dataType: 'json',
+		success: function(data) {
+			$('#getDiscountAmount').html(data.discount_amount)
+			var shipping= $('#getShippingCharge').val()
+			var final_total=parseFloat(shipping)+parseFloat(data.payable_total)
+			$('#getPayableTotal').html(final_total.toFixed().toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }))
+			$('#PayableTotal').val(data.payable_total)
+			if(data.status==false) alert(data.message)
+		},
+		error: function() {}
+	})
+})
+$('body').delegate('#SubmitForm','submit',function(e) {
+	e.preventDefault()
+	$.ajax({
+		type: 'POST',
+		url: '{{route('front.place_order')}}',
+		data: new FormData(this),
+		processData: false,
+		contentType: false,
+		dataType:'json',
+		success: function(data) {
+			if(data.status==false){
+				alert(data.message)
+			}else {
+				window.location.href=data.redirect
+			}
+		},
+		error:function(data) {}
+	})
+})
+
+</script>
 @endsection

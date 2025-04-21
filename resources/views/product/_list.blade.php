@@ -14,7 +14,16 @@
               @endif
             </a>
             <div class="product-action-vertical">
-              <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>Thêm vào yêu thích</span></a>
+            	@if(!empty(Auth::check()))
+						<a href="javascript:;" id="{{$value->id}}"
+							class="btn-product btn-wishlist add_to_wishlist
+										add_to_wishlist{{$value->id}} {{ !empty($value->checkWishList($value->id)) ? 'btn-wishlist-add' : '' }}" title="Yêu thích"><span>Thêm vào
+								yêu thích</span></a>
+						@else
+						<a href="#signin-modal" data-toggle="modal" class="btn-product btn-wishlist" title="Yêu thích"><span>Thêm
+								vào yêu
+								thích</span></a>
+						@endif
             </div>
             <div class="product-action">
               <a href="#" class="btn-product btn-cart"><span>Thêm giỏ hàng</span></a>
@@ -31,9 +40,9 @@
             </div>
             <div class="ratings-container">
               <div class="ratings">
-                <div class="ratings-val" style="width: 20%;"></div>
+                <div class="ratings-val" style="width: {{$value->getReviewRating($value->id)}}%;"></div>
               </div>
-              <span class="ratings-text">( 2 Reviews )</span>
+              <span class="ratings-text">( {{$value->getTotalReview()}} đánh giá )</span>
             </div>
           </div>
         </div>

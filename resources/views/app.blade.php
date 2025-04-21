@@ -4,6 +4,11 @@
 <head>
 	@include('layout.css')
 	@yield('css')
+	<style>
+		 .btn-wishlist-add::before {
+      content: '\f233' !important;
+    }
+	</style>
 </head>
 
 <body>
@@ -156,6 +161,23 @@
 						});
 					}
 				}
+			})
+		})
+		$('body').delegate('.add_to_wishlist','click',function() {
+			var product_id= $(this).attr('id')
+			$.ajax({
+				type:'POST',
+				url: '{{route('front.add_to_wishlist')}}',
+				data: {
+					'_token': '{{csrf_token()}}',
+					product_id: product_id,
+				},
+				dataType:'json',
+				success: function(data) {
+					if(data.is_wishlist==0) $('.add_to_wishlist'+product_id).removeClass('btn-wishlist-add')
+					else $('.add_to_wishlist'+product_id).addClass('btn-wishlist-add')
+				},
+				error: function(data) {}
 			})
 		})
 	</script>

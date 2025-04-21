@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -192,5 +193,44 @@ class Product extends Model
 			->limit(8)
 			->get();
 		return $return;
+	}
+	public function getTotalReview() {
+		return $this->hasMany(ProductReview::class,'product_id')
+		->join('users','users.id','product_reviews.user_id')
+		->count();
+	}
+	static public function getMyWishList($user_id) {
+		$return = Product::select(
+			'products.*',
+			'users.name as created_by_name',
+			'categories.name as category_name',
+			'categories.slug as category_slug',
+			'sub_categories.name as sub_category_name',
+			'sub_categories.slug as sub_category_slug',
+		)
+		->join('users', 'users.id', '=', 'products.created_by')
+			->join('categories', 'categories.id', '=', 'products.category_id')
+			->join('sub_categories', 'sub_categories.id', '=', 'products.sub_category_id')
+			->join('product_wishlists', 'product_wishlists.product_id', '=', 'products.id')
+			->where('product_wishlists.user_id','=',$user_id)
+			->where('products.is_delete','=',0)
+			->where('products.status','=',0)
+			->groupBy('products.id')
+			->orderBy('products.id','desc')
+			->paginate(3);
+
+			return $return;
+	}
+	static public function checkWishList($product_id) {
+		return ProductWishlist::checkAlready($product_id,Auth::user()->id);
+	}
+	static public function getReviewRating($product_id) {
+		$avg= ProductReview::getRatingReview($product_id);
+		if($avg>=1&&$avg<2) return 20;
+		elseif($avg>=2&&$avg<3) return 40;
+		elseif($avg>=3&&$avg<4) return 60;
+		elseif($avg>=4&&$avg<5) return 80;
+		elseif($avg==5) return 100;
+		else return 0;
 	}
 }

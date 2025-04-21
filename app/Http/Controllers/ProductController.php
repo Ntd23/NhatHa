@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductReview;
 use App\Models\ProductSize;
+use App\Models\ProductWishlist;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -24,6 +27,7 @@ class ProductController extends Controller
 			$data['meta_keywords'] = $getProductSingle->short_description;
 			$data['getProduct'] = $getProductSingle;
 			$data['getRelatedProduct'] = Product::getRelatedProduct($getProductSingle->id, $getProductSingle->sub_category_id);
+			$data['getReviewProduct']= ProductReview::getReviewProduct($getProductSingle->id);
 			return view('product.detail', $data);
 		} elseif (!empty($getCategory) && !empty($getSubCategory)) {
 			$data['meta_title'] = $getSubCategory->meta_title;
@@ -107,5 +111,28 @@ class ProductController extends Controller
 		$data['getBrand']= Brand::getRecordActive();
 
 		return view('product.list',$data);
+	}
+	public function my_wishlist() {
+		$data['meta_title'] = 'Danh sách yêu thích';
+    $data['meta_keywords'] = '';
+    $data['meta_description'] = '';
+
+    $data['getProduct'] = Product::getMyWishList(Auth::user()->id);
+    return view('product.my_wishlist', $data);
+	}
+	public function add_to_wishlist(Request $request) {
+		$check= ProductWishlist::checkAlready($request->product_id,Auth::user()->id);
+		if(empty($check)) {
+			$save= new ProductWishlist;
+			$save->product_id= $request->product_id;
+			$save->user_id= Auth::user()->id;
+			$save->save();
+			$json['is_wishlist']=1;
+		}else {
+			$count= ProductWishlist::DeleteRecord($request->product_id,Auth::user()->id);
+			$json['is_wishlist']=0;
+		}
+		$json['status']=true;
+		echo json_encode($json);
 	}
 }

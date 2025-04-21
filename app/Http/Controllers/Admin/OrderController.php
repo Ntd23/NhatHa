@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -12,54 +13,26 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+      $data['getRecord'] = Order::getRecord();
+    $data['header_title'] = 'Order';
+    return view('admin.order.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show(Request $request,string $id)
     {
-        //
+			$data['getRecord']=Order::getSingle($id);
+			$data['header_title']='Chi tiết đơn hàng';
+
+			return view('admin.order.detail', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+		public function status(Request $request)
     {
-        //
-    }
+        $getOrder= Order::getSingle($request->order_id);
+				$getOrder->status= $request->status;
+				$getOrder->save();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+				$json['message']= 'Đã cập nhật đơn hàng này!';
+				echo json_encode($json);
     }
 }

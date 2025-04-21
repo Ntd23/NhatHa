@@ -7,11 +7,15 @@
             <a href="#">Links</a>
             <ul>
               <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
-              <li><a href="wishlist.html"><i class="icon-heart-o"></i>My Wishlist <span>(3)</span></a></li>
+							@if(!empty(Auth::check()))
+              <li><a href="{{route('front.my_wishlist')}}"><i class="icon-heart-o"></i>My Wishlist<span></span></a></li>
+							@else
+							<li><a href="#signin-modal" data-toggle="modal"><i class="icon-heart-o"></i>My Wishlist<span></span></a></li>
+							@endif
               <li><a href="about.html">About Us</a></li>
               <li><a href="contact.html">Contact Us</a></li>
               @if (!empty(Auth::check()))
-                <li><a href="">{{ Auth::user()->name }}</a></li>
+                <li><a href="{{route('front.dashboard')}}">{{ Auth::user()->name }}</a></li>
               @else
                 <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
               @endif
