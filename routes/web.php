@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('admin/login', [AuthControllerForAdmin::class, 'login_form']);
 Route::post('admin/login', [AuthControllerForAdmin::class, 'login']);
-Route::get('admin/logout', [AuthControllerForAdmin::class, 'logout']);
+Route::get('admin/logout', [AuthControllerForAdmin::class, 'admin_logout'])->name('admin_logout');
 
 Route::group(['middleware' => 'is_admin'], function () {
 	Route::prefix('admin')->name('admin.')->group(function () {
@@ -94,6 +94,7 @@ Route::group(['middleware' => 'is_admin'], function () {
 //user
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::name('front.')->group(function () {
 	Route::get('', [HomeController::class, 'home'])->name('home');
@@ -113,6 +114,10 @@ Route::name('front.')->group(function () {
 		Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 		Route::get('order', [UserController::class, 'order'])->name('order');
 		Route::get('order/detail/{id}', [UserController::class, 'order_detail'])->name('order_detail');
+		Route::get('edit-profile',[UserController::class,'edit_profile'])->name('edit_profile');
+		Route::post('update-profile',[UserController::class,'update_profile'])->name('update_profile');
+		Route::get('change-password',[UserController::class,'change_password'])->name('change_password');
+		Route::post('change-password',[UserController::class,'update_password'])->name('update_password');
 		Route::post('make-review',[UserController::class,'submit_review'])->name('submit_review');
 		Route::get('my-wishlist', [ProductControllerFront::class, 'my_wishlist'])->name('my_wishlist');
 		Route::post('add_to_wishlist', [ProductControllerFront::class, 'add_to_wishlist'])->name('add_to_wishlist');

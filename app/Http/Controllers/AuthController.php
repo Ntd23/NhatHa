@@ -52,4 +52,8 @@ class AuthController extends Controller
 		}
 		echo json_encode($json);
 	}
+	public function logout() {
+		Auth::logout();
+		return redirect(route('front.home'));
+	}
 }
