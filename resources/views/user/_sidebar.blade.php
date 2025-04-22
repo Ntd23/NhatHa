@@ -5,19 +5,16 @@
         khiển</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" @if (Request::segment(2) == 'order') active @endif" href="{{ route('front.order') }}">Theo dõi đơn hàng</a>
+      <a class="nav-link @if (Request::segment(2) == 'order') active @endif"  href="{{ route('front.order') }}">Theo dõi đơn hàng</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link">Downloads</a>
+      <a class="nav-link @if (Request::segment(2) == 'edit-profile') active @endif" href="{{ route('front.edit_profile') }}">Hồ sơ</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link"Adresses</a>
+      <a class="nav-link @if (Request::segment(2) == 'change-password') active @endif" href="{{ route('front.change_password') }}">Đổi mật khẩu</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link">Account Details</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Sign Out</a>
+      <a class="nav-link" href="{{route('logout')}}">Đăng xuất</a>
     </li>
   </ul>
 </aside>

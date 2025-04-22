@@ -39,6 +39,7 @@
                   </thead>
                   <tbody>
                     @foreach ($getOrder as $value)
+										<tr>
                       <td>{{ $value->order_number }}</td>
                       <td>@money($value->total_amount)</td>
                       <td style="text-transform: capitalize;">{{ $value->payment_method }}</td>
@@ -59,6 +60,7 @@
                       <td>
                         <a href="{{route('front.order_detail',$value->id)}}" class="btn btn-info">Chi tiết</a>
                       </td>
+											</tr>
                     @endforeach
                   </tbody>
                 </table>

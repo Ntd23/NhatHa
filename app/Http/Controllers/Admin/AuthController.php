@@ -29,7 +29,7 @@ class AuthController extends Controller
         return redirect()->back()->with('error','Email hoặc mật khẩu không chính xác');
       }
     }
-    public function logout() {
+    public function admin_logout() {
       Auth::logout();
       return redirect('admin/login');
     }
