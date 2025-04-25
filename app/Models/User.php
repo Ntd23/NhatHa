@@ -54,4 +54,34 @@ class User extends Authenticatable
 	{
 		return User::find($user_id);
 	}
+	static public function getAdmin() {
+		return self::select('users.*')
+		->where('users.is_admin','=',1)
+		->where('users.is_delete',0)
+		->orderBy('id','desc')
+		->get();
+	}
+	static public function getCustomer() {
+		$return = self::select('users.*');
+    if (!empty(request()->get('id'))) {
+      $return = $return->where('id', '=', request()->get('id'));
+    }
+    if (!empty(request()->get('name'))) {
+      $return = $return->where('name', 'like', '%' . request()->get('name') . '%');
+    }
+    if (!empty(request()->get('email'))) {
+      $return = $return->where('email', 'like', '%' . request()->get('email') . '%');
+    }
+    if (!empty(request()->get('from_date'))) {
+      $return = $return->whereDate('created_at', '>=', request()->get('from_date'));
+    }
+    if (!empty(request()->get('to_date'))) {
+      $return = $return->whereDate('created_at', '<=', request()->get('to_date'));
+    }
+    $return = $return->where('is_admin', 0)
+      ->where('is_delete', 0)
+      ->orderBy('id', 'desc')->paginate(15);
+
+    return $return;
+	}
 }

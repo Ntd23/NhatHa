@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notification;
 use App\Models\PaymentSetting;
 use Illuminate\Http\Request;
 
@@ -23,5 +24,11 @@ class PageController extends Controller
 		$save->is_cash_delivery = !empty($request->is_cash_delivery) ? 1 : 0;
 		$save->save();
 		return redirect()->back()->with('success', 'Cài đặt thanh toán đã được cập nhật!');
+	}
+	public function notification() {
+		$data['getRecord'] = Notification::getRecord();
+    $data['header_title'] = 'Thông báo';
+
+    return view('admin.notification.index', $data);
 	}
 }

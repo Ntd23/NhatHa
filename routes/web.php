@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController as AuthControllerForAdmin;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\PageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\admin\ShippingChargeController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
@@ -26,6 +28,15 @@ Route::group(['middleware' => 'is_admin'], function () {
 		Route::get('dashboard', function () {
 			return view('admin.dashboard');
 		})->name('dashboard');
+		Route::controller(AdminController::class)->prefix('admin')->group(function() {
+			Route::get('index','index')->name('index');
+			Route::get('create','create')->name('create');
+			Route::post('store','store')->name('store');
+			Route::get('edit/{id}','edit')->name('edit');
+			Route::post('update/{id}','update')->name('update');
+			Route::get('delete/{id}','destroy')->name('delete');
+			Route::get('customer','customer')->name('customer');
+		});
 		Route::prefix('category')->controller(CategoryController::class)->group(function () {
 			Route::get('index', 'index')->name('category.index');
 			Route::get('create', 'create')->name('category.create');
@@ -84,9 +95,20 @@ Route::group(['middleware' => 'is_admin'], function () {
 			Route::get('show/{id}', 'show')->name('order.detail');
 			Route::get('status', 'status')->name('order.status');
 		});
+		Route::prefix('slider')->controller(SliderController::class)->group(function () {
+			Route::get('index', 'index')->name('slider.index');
+			Route::get('create', 'create')->name('slider.create');
+			Route::post('store', 'store')->name('slider.store');
+			Route::get('edit/{id}', 'edit')->name('slider.edit');
+			Route::post('update/{id}', 'update')->name('slider.update');
+			Route::get('delete/{id}', 'destroy')->name('slider.delete');
+		});
 		Route::prefix('payment-setting')->controller(PageController::class)->group(function () {
 			Route::get('', 'payment_setting')->name('payment_setting');
 			Route::post('', 'update_payment_setting')->name('update_payment_setting');
+		});
+		Route::controller(PageController::class)->group(function() {
+			Route::get('notification','notification')->name('notification');
 		});
 	});
 });
@@ -118,6 +140,7 @@ Route::name('front.')->group(function () {
 		Route::post('update-profile',[UserController::class,'update_profile'])->name('update_profile');
 		Route::get('change-password',[UserController::class,'change_password'])->name('change_password');
 		Route::post('change-password',[UserController::class,'update_password'])->name('update_password');
+		Route::get('notifications',[UserController::class,'notifications'])->name('notifications');
 		Route::post('make-review',[UserController::class,'submit_review'])->name('submit_review');
 		Route::get('my-wishlist', [ProductControllerFront::class, 'my_wishlist'])->name('my_wishlist');
 		Route::post('add_to_wishlist', [ProductControllerFront::class, 'add_to_wishlist'])->name('add_to_wishlist');
