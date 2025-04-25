@@ -36,43 +36,14 @@
           </ul>
         </li>
         <li class="menu-title">Extras</li>
-        <li class="submenu">
-          <a href="#"><i class="fa fa-columns"></i> <span>Pages</span> <span class="menu-arrow"></span></a>
-          <ul style="display: none;">
-            <li><a href="login.html"> Login </a></li>
-            <li><a href="register.html"> Register </a></li>
-            <li><a href="forgot-password.html"> Forgot Password </a></li>
-            <li><a href="change-password2.html"> Change Password </a></li>
-            <li><a href="lock-screen.html"> Lock Screen </a></li>
-            <li><a href="profile.html"> Profile </a></li>
-            <li><a href="gallery.html"> Gallery </a></li>
-            <li><a href="error-404.html">404 Error </a></li>
-            <li><a href="error-500.html">500 Error </a></li>
-            <li><a href="blank-page.html"> Blank Page </a></li>
-          </ul>
+        <li class="@if (Request::segment(2) === 'admin') active @endif">
+          <a href="{{route('admin.index')}}"><i class="fa fa-bell-o"></i> <span>Quản trị viên</span></a>
         </li>
-        <li class="submenu">
-          <a href="javascript:void(0);"><i class="fa fa-share-alt"></i> <span>Multi Level</span> <span
-              class="menu-arrow"></span></a>
-          <ul style="display: none;">
-            <li class="submenu">
-              <a href="javascript:void(0);"><span>Level 1</span> <span class="menu-arrow"></span></a>
-              <ul style="display: none;">
-                <li><a href="javascript:void(0);"><span>Level 2</span></a></li>
-                <li class="submenu">
-                  <a href="javascript:void(0);"> <span> Level 2</span> <span class="menu-arrow"></span></a>
-                  <ul style="display: none;">
-                    <li><a href="javascript:void(0);">Level 3</a></li>
-                    <li><a href="javascript:void(0);">Level 3</a></li>
-                  </ul>
-                </li>
-                <li><a href="javascript:void(0);"><span>Level 2</span></a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="javascript:void(0);"><span>Level 1</span></a>
-            </li>
-          </ul>
+        <li class="@if (Request::segment(2) === 'customer') active @endif">
+          <a href="{{route('admin.customer')}}"><i class="fa fa-bell-o"></i> <span>Khách hàng</span></a>
+        </li>
+        <li class="@if (Request::segment(2) === 'slider') active @endif">
+          <a href="{{route('admin.slider.index')}}"><i class="fa fa-bell-o"></i> <span>Thanh trượt</span></a>
         </li>
       </ul>
     </div>

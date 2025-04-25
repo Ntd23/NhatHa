@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,13 @@ class AuthController extends Controller
 			$user->email = $request->email;
 			$user->password = Hash::make($request->password);
 			$user->save();
+
+			//notify
+			$user_id=1;
+			$url= route('admin.customer');
+			$msg= 'Khách hàng @'. $request->name .' đã đăng ký tài khoản';
+			Notification::insertRecord($user_id, $url, $msg);
+
 			$json['status'] = true;
 			$json['message'] = 'Khách hàng đăng ký tài khoản thành công.<br/>Vui lòng đăng nhập lại!';
 		} else {

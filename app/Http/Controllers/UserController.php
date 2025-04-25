@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\ProductReview;
 use App\Models\User;
@@ -30,11 +31,14 @@ class UserController extends Controller
 		$data['TotalCancelled'] = Order::getTotalStatusForUser(Auth::user()->id, 4);
 		return view('user.dashboard', $data);
 	}
-	public function order()
+	public function order(Request $request)
 	{
 		$data['meta_title'] = 'Đơn hàng của tôi';
 		$data['meta_keywords'] = '';
 		$data['meta_description'] = '';
+		if(!empty($request->noti_id)) {
+			Notification::updateReadNoti($request->noti_id);
+		}
 		$data['getOrder'] = Order::getRecordForUser(Auth::user()->id);
 		return view('user.order', $data);
 	}
@@ -111,5 +115,13 @@ class UserController extends Controller
 		} else {
 			return redirect()->back()->with('error', 'Mật khẩu không chính xác');
 		}
+	}
+	public function notifications(Request $request) {
+		$data['meta_title'] = 'Thông báo';
+    $data['meta_keywords'] = '';
+    $data['meta_description'] = '';
+
+    $data['getRecord'] = Notification::getRecordUser(Auth::user()->id);
+    return view('user.notification', $data);
 	}
 }

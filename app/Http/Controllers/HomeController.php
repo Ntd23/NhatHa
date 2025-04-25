@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function home(){
+			$data['getSlider']=Slider::getRecordAcitve();
 			$data['getProduct']= Product::getRecentArrival();
 			$data['getCategory']= Category::getRecordActiveHome();
 			$data['getProductTrendy']= Product::getProductTrendy();

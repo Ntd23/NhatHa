@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DiscountCode;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PaymentSetting;
@@ -209,7 +210,12 @@ class PaymentController extends Controller
 					$getOrder->is_payment = 1;
 					$getOrder->save();
 
+					//notify
 					$user_id = 1;
+					$url= route('admin.order.detail',$getOrder->id);
+					$msg= 'Đơn hàng #'. $getOrder->order_number .' đã được đặt';
+					Notification::insertRecord($user_id, $url, $msg);
+
 					\Cart::clear();
 					return redirect(route('front.cart'))->with('success', 'Đơn hàng đặt thành công!');
 				} elseif ($getOrder->payment_method == 'stripe') {
@@ -263,6 +269,12 @@ class PaymentController extends Controller
 			$getOrder->transaction_id = $getData->id;
 			$getOrder->payment_data = json_encode($getData);
 			$getOrder->save();
+
+			//notify
+			$user_id = 1;
+			$url= route('admin.order.detail',$getOrder->id);
+			$msg= 'Đơn hàng #'. $getOrder->order_number .' đã được đặt';
+			Notification::insertRecord($user_id, $url, $msg);
 
 			\Cart::clear();
 			return redirect(route('front.cart'))->with('success', 'Đơn hàng đặt thành công!');

@@ -5,125 +5,32 @@
       <div class="intro-slider-container slider-container-ratio mb-2">
         <div class="intro-slider owl-carousel owl-simple owl-light owl-nav-inside" data-toggle="owl"
           data-owl-options='{"nav": false}'>
-          <div class="intro-slide">
-            <figure class="slide-image">
-              <picture>
-                <source media="(max-width: 480px)" srcset="assets/images/demos/demo-10/slider/slide-1-480w.jpg">
-                <img src="assets/images/demos/demo-10/slider/slide-1.jpg" alt="Image Desc">
-              </picture>
-            </figure><!-- End .slide-image -->
+          @foreach ($getSlider as $slider)
+            @if (!empty($slider->getImage()))
+              <div class="intro-slide">
+                <figure class="slide-image">
+                  <picture>
+                    <source media="(max-width: 480px)" srcset="{{ $slider->getImage() }}">
+                    <img src="{{ $slider->getImage() }}" alt="{{ $slider->title }}">
+                  </picture>
+                </figure><!-- End .slide-image -->
+                <div class="intro-content">
+                  <h3 class="intro-subtitle">{!! $slider->title !!}</h3><!-- End .h3 intro-subtitle -->
+                  @if (!empty($slider->button_name) && !empty($slider->button_link))
+                    <a href="{{$slider->button_link}}" class="btn btn-white-primary btn-round">
+                      <span>{{$slider->button_name}}</span>
+                      <i class="icon-long-arrow-right"></i>
+                    </a>
+                  @endif
+                </div>
+              </div>
+            @endif
+          @endforeach
 
-            <div class="intro-content">
-              <h3 class="intro-subtitle">Deals and Promotions</h3><!-- End .h3 intro-subtitle -->
-              <h1 class="intro-title text-white">Sneakers & Athletic Shoes</h1><!-- End .intro-title -->
-
-              <div class="intro-price text-white">from $9.99</div><!-- End .intro-price -->
-
-              <a href="category.html" class="btn btn-white-primary btn-round">
-                <span>SHOP NOW</span>
-                <i class="icon-long-arrow-right"></i>
-              </a>
-            </div><!-- End .intro-content -->
-          </div><!-- End .intro-slide -->
-
-          <div class="intro-slide">
-            <figure class="slide-image">
-              <picture>
-                <source media="(max-width: 480px)" srcset="assets/images/demos/demo-10/slider/slide-2-480w.jpg">
-                <img src="assets/images/demos/demo-10/slider/slide-2.jpg" alt="Image Desc">
-              </picture>
-            </figure><!-- End .slide-image -->
-
-            <div class="intro-content">
-              <h3 class="intro-subtitle">Trending Now</h3><!-- End .h3 intro-subtitle -->
-              <h1 class="intro-title text-white">This Week's Most Wanted</h1><!-- End .intro-title -->
-
-              <div class="intro-price text-white">from $49.99</div><!-- End .intro-price -->
-
-              <a href="category.html" class="btn btn-white-primary btn-round">
-                <span>SHOP NOW</span>
-                <i class="icon-long-arrow-right"></i>
-              </a>
-            </div><!-- End .intro-content -->
-          </div><!-- End .intro-slide -->
-
-          <div class="intro-slide">
-            <figure class="slide-image">
-              <picture>
-                <source media="(max-width: 480px)" srcset="assets/images/demos/demo-10/slider/slide-3-480w.jpg">
-                <img src="assets/images/demos/demo-10/slider/slide-3.jpg" alt="Image Desc">
-              </picture>
-            </figure><!-- End .slide-image -->
-
-            <div class="intro-content">
-              <h3 class="intro-subtitle text-white">Deals and Promotions</h3><!-- End .h3 intro-subtitle -->
-              <h1 class="intro-title text-white">Can’t-miss Clearance:</h1><!-- End .intro-title -->
-
-              <div class="intro-price text-white">starting at 60% off</div><!-- End .intro-price -->
-
-              <a href="category.html" class="btn btn-white-primary btn-round">
-                <span>SHOP NOW</span>
-                <i class="icon-long-arrow-right"></i>
-              </a>
-            </div><!-- End .intro-content -->
-          </div><!-- End .intro-slide -->
         </div><!-- End .intro-slider owl-carousel owl-simple -->
         <span class="slider-loader"></span><!-- End .slider-loader -->
       </div><!-- End .intro-slider-container -->
     </div>
-
-    <div class="banner-group">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8">
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="banner banner-overlay">
-                  <a href="#">
-                    <img src="assets/images/demos/demo-10/banners/banner-1.jpg" alt="Banner">
-                  </a>
-
-                  <div class="banner-content banner-content-right">
-                    <h4 class="banner-subtitle"><a href="#">New Arrivals</a></h4><!-- End .banner-subtitle -->
-                    <h3 class="banner-title text-white"><a href="#">Sneakers & <br>Athletic Shoes</a></h3>
-                    <!-- End .banner-title -->
-                    <a href="#" class="btn btn-outline-white banner-link btn-round">Discover Now</a>
-                  </div><!-- End .banner-content -->
-                </div><!-- End .banner -->
-              </div><!-- End .col-sm-6 -->
-            </div><!-- End .row -->
-            <div class="banner banner-large banner-overlay d-none d-sm-block">
-              <a href="#">
-                <img src="assets/images/demos/demo-10/banners/banner-3.jpg" alt="Banner">
-              </a>
-
-              <div class="banner-content">
-                <h4 class="banner-subtitle text-white"><a href="#">On Sale</a></h4><!-- End .banner-subtitle -->
-                <h3 class="banner-title text-white"><a href="#">Slip-On Loafers</a></h3><!-- End .banner-title -->
-                <div class="banner-text text-white"><a href="#">up to 30% off</a></div><!-- End .banner-text -->
-                <a href="#" class="btn btn-outline-white banner-link btn-round">Shop Now</a>
-              </div><!-- End .banner-content -->
-            </div><!-- End .banner -->
-          </div><!-- End .col-lg-8 -->
-
-          <div class="col-lg-4 d-sm-none d-lg-block">
-            <div class="banner banner-middle banner-overlay">
-              <a href="#">
-                <img src="assets/images/demos/demo-10/banners/banner-4.jpg" alt="Banner">
-              </a>
-
-              <div class="banner-content banner-content-bottom">
-                <h4 class="banner-subtitle text-white"><a href="#">On Sale</a></h4><!-- End .banner-subtitle -->
-                <h3 class="banner-title text-white"><a href="#">Amazing <br>Lace Up Boots</a></h3>
-                <!-- End .banner-title -->
-                <div class="banner-text text-white"><a href="#">from $39.00</a></div><!-- End .banner-text -->
-                <a href="#" class="btn btn-outline-white banner-link btn-round">Discover Now</a>
-              </div><!-- End .banner-content -->
-            </div><!-- End .banner -->
-          </div><!-- End .col-lg-4 -->
-        </div><!-- End .row -->
-      </div>
-    </div><!-- End .banner-group -->
 
     <div class="icon-boxes-container icon-boxes-separator bg-transparent">
       <div class="container">
@@ -133,7 +40,6 @@
               <span class="icon-box-icon text-primary">
                 <i class="icon-rocket"></i>
               </span>
-
               <div class="icon-box-content">
                 <h3 class="icon-box-title">Free Shipping</h3><!-- End .icon-box-title -->
                 <p>Orders $50 or more</p>
@@ -153,20 +59,6 @@
               </div><!-- End .icon-box-content -->
             </div><!-- End .icon-box -->
           </div><!-- End .col-sm-6 col-lg-3 -->
-
-          <div class="col-sm-6 col-lg-3">
-            <div class="icon-box icon-box-side">
-              <span class="icon-box-icon text-primary">
-                <i class="icon-info-circle"></i>
-              </span>
-
-              <div class="icon-box-content">
-                <h3 class="icon-box-title">Get 20% Off 1 Item</h3><!-- End .icon-box-title -->
-                <p>when you sign up</p>
-              </div><!-- End .icon-box-content -->
-            </div><!-- End .icon-box -->
-          </div><!-- End .col-sm-6 col-lg-3 -->
-
           <div class="col-sm-6 col-lg-3">
             <div class="icon-box icon-box-side">
               <span class="icon-box-icon text-primary">
@@ -199,7 +91,7 @@
                         href="{{ route('front.category', $category->slug) }}">{{ $category->name }}</a></h3>
                     <h4 class="banner-subtitle">{{ $category->getProduct()->count() }} sản phẩm</h4>
                     @if (!empty($category->button_name))
-                      <a href="category.html" class="banner-link">{{ $category->button_name }}</a>
+                      <a href="{{ route('front.category', $category->slug) }}" class="banner-link">{{ $category->button_name }}</a>
                     @endif
                   </div><!-- End .banner-content -->
                 </div><!-- End .banner -->
@@ -236,32 +128,34 @@
             @include('product._list')
           </div><!-- End .products -->
           <div class="more-container text-center mt-5">
-            <a href="{{route('front.search')}}" class="btn btn-outline-lightgray btn-more btn-round"><span>Xem thêm</span><i class="icon-long-arrow-right"></i></a>
+            <a href="{{ route('front.search') }}" class="btn btn-outline-lightgray btn-more btn-round"><span>Xem
+                thêm</span><i class="icon-long-arrow-right"></i></a>
           </div>
         </div>
-				  @foreach ($getCategory as $category)
-        <div class="tab-pane p-0 fade getCategoryProduct{{ $category->id }}" id="top-{{ $category->slug }}-tab"
-          role="tabpanel" aria-labelledby="top-{{ $category->slug }}-link">
-        </div>
-      @endforeach
+        @foreach ($getCategory as $category)
+          <div class="tab-pane p-0 fade getCategoryProduct{{ $category->id }}" id="top-{{ $category->slug }}-tab"
+            role="tabpanel" aria-labelledby="top-{{ $category->slug }}-link">
+          </div>
+        @endforeach
       </div>
     </div>
-		{{-- refund, payment delivery  --}}
+    {{-- refund, payment delivery  --}}
 
-    <div class="container"><hr>
+    <div class="container">
+      <hr>
       <div class="row justify-content-center">
-          <div class="col-lg-4 col-sm-6">
-            <div class="icon-box icon-box-card text-center">
-                <span class="icon-box-icon">
-                  <img style="width: 50px;" src="" alt="">
-                </span>
-              <div class="icon-box-content">
-                <h3 class="icon-box-title">dasdasd</h3>
-                <p>fsefesf</p>
-              </div>
+        <div class="col-lg-4 col-sm-6">
+          <div class="icon-box icon-box-card text-center">
+            <span class="icon-box-icon">
+              <img style="width: 50px;" src="" alt="">
+            </span>
+            <div class="icon-box-content">
+              <h3 class="icon-box-title">dasdasd</h3>
+              <p>fsefesf</p>
             </div>
           </div>
-			</div>
+        </div>
+      </div>
     </div>
     <div class="mb-5"></div><!-- End .mb5 -->
     <div class="blog-posts">
