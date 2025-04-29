@@ -88,14 +88,14 @@ class SliderController extends Controller
 		$image_name = $request->file('image_name');
 		if (!empty($request->file('image_name'))) {
 			$oldImage = $slider->image_name;
-			if (!empty($oldImage) && !empty($oldImage->getImage())) {
-				Storage::disk('public')->delete('slider/' . $oldImage->image_name);
-				if ($image_name->isValid()) {
-					$ext = $image_name->getClientOriginalExtension();
-					$filename = time() . '.' . $ext;
-					$image_name->storeAs('slider', $filename, 'public');
-					$slider->image_name = trim($filename);
-				}
+			if (!empty($oldImage)) {
+				Storage::disk('public')->delete('slider/' . $oldImage);
+			}
+			if ($image_name->isValid()) {
+				$ext = $image_name->getClientOriginalExtension();
+				$filename = time() . '.' . $ext;
+				$image_name->storeAs('slider', $filename, 'public');
+				$slider->image_name = trim($filename);
 			}
 		}
 		$slider->save();
