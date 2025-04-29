@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController as AuthControllerForAdmin;
+use App\Http\Controllers\Admin\BlogCategoryController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DiscountCodeController;
@@ -28,14 +30,14 @@ Route::group(['middleware' => 'is_admin'], function () {
 		Route::get('dashboard', function () {
 			return view('admin.dashboard');
 		})->name('dashboard');
-		Route::controller(AdminController::class)->prefix('admin')->group(function() {
-			Route::get('index','index')->name('index');
-			Route::get('create','create')->name('create');
-			Route::post('store','store')->name('store');
-			Route::get('edit/{id}','edit')->name('edit');
-			Route::post('update/{id}','update')->name('update');
-			Route::get('delete/{id}','destroy')->name('delete');
-			Route::get('customer','customer')->name('customer');
+		Route::controller(AdminController::class)->prefix('admin')->group(function () {
+			Route::get('index', 'index')->name('index');
+			Route::get('create', 'create')->name('create');
+			Route::post('store', 'store')->name('store');
+			Route::get('edit/{id}', 'edit')->name('edit');
+			Route::post('update/{id}', 'update')->name('update');
+			Route::get('delete/{id}', 'destroy')->name('delete');
+			Route::get('customer', 'customer')->name('customer');
 		});
 		Route::prefix('category')->controller(CategoryController::class)->group(function () {
 			Route::get('index', 'index')->name('category.index');
@@ -103,12 +105,35 @@ Route::group(['middleware' => 'is_admin'], function () {
 			Route::post('update/{id}', 'update')->name('slider.update');
 			Route::get('delete/{id}', 'destroy')->name('slider.delete');
 		});
+		Route::prefix('blog-category')->controller(BlogCategoryController::class)->group(function () {
+			Route::get('index', 'index')->name('blog_category.index');
+			Route::get('create', 'create')->name('blog_category.create');
+			Route::post('store', 'store')->name('blog_category.store');
+			Route::get('edit/{id}', 'edit')->name('blog_category.edit');
+			Route::post('update/{id}', 'update')->name('blog_category.update');
+			Route::get('delete/{id}', 'destroy')->name('blog_category.delete');
+		});
+		Route::prefix('blog')->controller(BlogController::class)->group(function () {
+			Route::get('index', 'index')->name('blog.index');
+			Route::get('create', 'create')->name('blog.create');
+			Route::post('store', 'store')->name('blog.store');
+			Route::get('edit/{id}', 'edit')->name('blog.edit');
+			Route::post('update/{id}', 'update')->name('blog.update');
+			Route::get('delete/{id}', 'destroy')->name('blog.delete');
+		});
 		Route::prefix('payment-setting')->controller(PageController::class)->group(function () {
 			Route::get('', 'payment_setting')->name('payment_setting');
 			Route::post('', 'update_payment_setting')->name('update_payment_setting');
 		});
-		Route::controller(PageController::class)->group(function() {
-			Route::get('notification','notification')->name('notification');
+		Route::controller(PageController::class)->group(function () {
+			Route::prefix('page')->name('page.')->group(function () {
+				Route::get('index', [PageController::class, 'index'])->name('index');
+				Route::get('create', [PageController::class, 'create'])->name('create');
+				Route::post('store', [PageController::class, 'store'])->name('store');
+				Route::get('edit/{id}', [PageController::class, 'edit'])->name('edit');
+				Route::post('update/{id}', [PageController::class, 'update'])->name('update');
+			});
+			Route::get('notification', 'notification')->name('notification');
 		});
 	});
 });
@@ -136,14 +161,20 @@ Route::name('front.')->group(function () {
 		Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 		Route::get('order', [UserController::class, 'order'])->name('order');
 		Route::get('order/detail/{id}', [UserController::class, 'order_detail'])->name('order_detail');
-		Route::get('edit-profile',[UserController::class,'edit_profile'])->name('edit_profile');
-		Route::post('update-profile',[UserController::class,'update_profile'])->name('update_profile');
-		Route::get('change-password',[UserController::class,'change_password'])->name('change_password');
-		Route::post('change-password',[UserController::class,'update_password'])->name('update_password');
-		Route::get('notifications',[UserController::class,'notifications'])->name('notifications');
-		Route::post('make-review',[UserController::class,'submit_review'])->name('submit_review');
+		Route::get('edit-profile', [UserController::class, 'edit_profile'])->name('edit_profile');
+		Route::post('update-profile', [UserController::class, 'update_profile'])->name('update_profile');
+		Route::get('change-password', [UserController::class, 'change_password'])->name('change_password');
+		Route::post('change-password', [UserController::class, 'update_password'])->name('update_password');
+		Route::get('notifications', [UserController::class, 'notifications'])->name('notifications');
+		Route::post('make-review', [UserController::class, 'submit_review'])->name('submit_review');
 		Route::get('my-wishlist', [ProductControllerFront::class, 'my_wishlist'])->name('my_wishlist');
 		Route::post('add_to_wishlist', [ProductControllerFront::class, 'add_to_wishlist'])->name('add_to_wishlist');
+	});
+	Route::prefix('blog')->controller(HomeController::class)->group(function () {
+		Route::get('', [HomeController::class, 'blog'])->name('blog');
+		Route::get('/{slug}', [HomeController::class, 'blog_detail'])->name('blog_detail');
+		Route::get('/category/{slug}', [HomeController::class, 'blog_category'])->name('blog_category');
+		Route::post('/submit_comment', [HomeController::class, 'submit_comment'])->name('submit_comment');
 	});
 	Route::get('{category?}/{sub_category?}', [ProductControllerFront::class, 'getCategory'])->name('category');
 });

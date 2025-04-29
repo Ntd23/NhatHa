@@ -4,11 +4,68 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
+use App\Models\Page;
 use App\Models\PaymentSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Str;
 
 class PageController extends Controller
 {
+	public function index()
+  {
+    $data['getRecord'] = Page::getRecord();
+    $data['header_title'] = 'Trang';
+
+    return view('admin.page.index', $data);
+  }
+	public function create() {
+    $data['header_title'] = 'Thêm trang';
+
+    return view('admin.page.create', $data);
+	}
+	public function store(Request $request) {
+		$page= new Page;
+		$page->name= trim($request->name);
+		$page->save();
+
+		return redirect(route('admin.page.edit', $page->id));
+	}
+  public function edit($id)
+  {
+    $data['getRecord'] = Page::getSingle($id);
+    $data['header_title'] = 'Sửa trang';
+
+    return view('admin.page.edit', $data);
+  }
+  public function update(Request $request, $id)
+  {
+    $page = Page::getSingle($id);
+    $page->name = trim($request->name);
+    $page->slug = str_replace(' ', '-', trim($request->name));
+    $page->title = trim($request->title);
+    $page->description = trim($request->description);
+    $page->meta_title = trim($request->meta_title);
+    $page->meta_desciption = trim($request->meta_description);
+    $page->meta_keywords = trim($request->meta_keywords);
+    //upload image
+		$image_name = $request->file('image_name');
+		if (!empty($request->file('image_name'))) {
+			$oldImage = $page->image_name;
+			if (!empty($oldImage)) {
+				Storage::disk('public')->delete('page/' . $oldImage);
+			}
+			if ($image_name->isValid()) {
+				$ext = $image_name->getClientOriginalExtension();
+				$filename = time() . '.' . $ext;
+				$image_name->storeAs('page', $filename, 'public');
+				$page->image_name = trim($filename);
+			}
+		}
+    $page->save();
+
+    return redirect(route('admin.page.index'))->with('success', 'Trang cập nhật thành công!');
+  }
 	public function payment_setting()
 	{
 		$data['header_title'] = 'Cài đặt thanh toán';

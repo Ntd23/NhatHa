@@ -17,8 +17,8 @@
                 <div class="intro-content">
                   <h3 class="intro-subtitle">{!! $slider->title !!}</h3><!-- End .h3 intro-subtitle -->
                   @if (!empty($slider->button_name) && !empty($slider->button_link))
-                    <a href="{{$slider->button_link}}" class="btn btn-white-primary btn-round">
-                      <span>{{$slider->button_name}}</span>
+                    <a href="{{ $slider->button_link }}" class="btn btn-white-primary btn-round">
+                      <span>{{ $slider->button_name }}</span>
                       <i class="icon-long-arrow-right"></i>
                     </a>
                   @endif
@@ -91,7 +91,8 @@
                         href="{{ route('front.category', $category->slug) }}">{{ $category->name }}</a></h3>
                     <h4 class="banner-subtitle">{{ $category->getProduct()->count() }} sản phẩm</h4>
                     @if (!empty($category->button_name))
-                      <a href="{{ route('front.category', $category->slug) }}" class="banner-link">{{ $category->button_name }}</a>
+                      <a href="{{ route('front.category', $category->slug) }}"
+                        class="banner-link">{{ $category->button_name }}</a>
                     @endif
                   </div><!-- End .banner-content -->
                 </div><!-- End .banner -->
@@ -158,12 +159,13 @@
       </div>
     </div>
     <div class="mb-5"></div><!-- End .mb5 -->
-    <div class="blog-posts">
-      <div class="container">
-        <h2 class="title-lg text-center mb-4">From Our Blog</h2><!-- End .title-lg text-center -->
+    @if (!empty($getBlog->count()))
+      <div class="blog-posts">
+        <div class="container">
+          <h2 class="title-lg text-center mb-4">Bài viết từ chúng tôi</h2><!-- End .title-lg text-center -->
 
-        <div class="owl-carousel owl-simple mb-4" data-toggle="owl"
-          data-owl-options='{
+          <div class="owl-carousel owl-simple mb-4" data-toggle="owl"
+            data-owl-options='{
                             "nav": false,
                             "dots": true,
                             "items": 3,
@@ -184,108 +186,35 @@
                                 }
                             }
                         }'>
-          <article class="entry">
-            <figure class="entry-media">
-              <a href="single.html">
-                <img src="assets/images/demos/demo-10/blog/post-1.jpg" alt="image desc">
-              </a>
-            </figure><!-- End .entry-media -->
-
-            <div class="entry-body text-center">
-              <div class="entry-meta">
-                <a href="#">Nov 22, 2018</a>, 0 Comments
-              </div><!-- End .entry-meta -->
-
-              <h3 class="entry-title">
-                <a href="single.html">Sed adipiscing ornare.</a>
-              </h3><!-- End .entry-title -->
-
-              <div class="entry-content">
-                <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id,
-                  mattis vel, nisi. </p>
-                <a href="single.html" class="read-more">READ MORE</a>
-              </div><!-- End .entry-content -->
-            </div><!-- End .entry-body -->
-          </article><!-- End .entry -->
-
-          <article class="entry">
-            <figure class="entry-media">
-              <a href="single.html">
-                <img src="assets/images/demos/demo-10/blog/post-2.jpg" alt="image desc">
-              </a>
-            </figure><!-- End .entry-media -->
-
-            <div class="entry-body text-center">
-              <div class="entry-meta">
-                <a href="#">Dec 12, 2018</a>, 0 Comments
-              </div><!-- End .entry-meta -->
-
-              <h3 class="entry-title">
-                <a href="single.html">Fusce lacinia arcuet nulla.</a>
-              </h3><!-- End .entry-title -->
-
-              <div class="entry-content">
-                <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc
-                  tortor eu nibh. </p>
-                <a href="single.html" class="read-more">READ MORE</a>
-              </div><!-- End .entry-content -->
-            </div><!-- End .entry-body -->
-          </article><!-- End .entry -->
-
-          <article class="entry">
-            <figure class="entry-media">
-              <a href="single.html">
-                <img src="assets/images/demos/demo-10/blog/post-3.jpg" alt="image desc">
-              </a>
-            </figure><!-- End .entry-media -->
-
-            <div class="entry-body text-center">
-              <div class="entry-meta">
-                <a href="#">Dec 19, 2018</a>, 2 Comments
-              </div><!-- End .entry-meta -->
-
-              <h3 class="entry-title">
-                <a href="single.html">Aliquam erat volutpat.</a>
-              </h3><!-- End .entry-title -->
-
-              <div class="entry-content">
-                <p>Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. </p>
-                <a href="single.html" class="read-more">READ MORE</a>
-              </div><!-- End .entry-content -->
-            </div><!-- End .entry-body -->
-          </article><!-- End .entry -->
-
-          <article class="entry">
-            <figure class="entry-media">
-              <a href="single.html">
-                <img src="assets/images/demos/demo-10/blog/post-4.jpg" alt="image desc">
-              </a>
-            </figure><!-- End .entry-media -->
-
-            <div class="entry-body text-center">
-              <div class="entry-meta">
-                <a href="#">Dec 19, 2018</a>, 2 Comments
-              </div><!-- End .entry-meta -->
-
-              <h3 class="entry-title">
-                <a href="single.html">Quisque a lectus.</a>
-              </h3><!-- End .entry-title -->
-
-              <div class="entry-content">
-                <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue.
-                </p>
-                <a href="single.html" class="read-more">READ MORE</a>
-              </div><!-- End .entry-content -->
-            </div><!-- End .entry-body -->
-          </article><!-- End .entry -->
-        </div><!-- End .owl-carousel -->
-
-        <div class="more-container text-center mt-1">
-          <a href="blog.html" class="btn btn-outline-lightgray btn-more btn-round"><span>View more articles</span><i
-              class="icon-long-arrow-right"></i></a>
+            @foreach ($getBlog as $blog)
+              <article class="entry">
+                <figure class="entry-media">
+                  <a href="{{ route('front.blog_detail', $blog->slug) }}">
+                    <img src="{{ $blog->getImage() }}" alt="{{ $blog->title }}">
+                  </a>
+                </figure>
+                <div class="entry-body text-center">
+                  <div class="entry-meta">
+                    <a href="#">{{ date('M d, Y', strtotime($blog->created_at)) }}</a>, 0 bình luận
+                  </div>
+                  <h3 class="entry-title">
+                    <a href="{{ route('front.blog_detail', $blog->slug) }}">{{ $blog->title }}</a>
+                  </h3>
+                  <div class="entry-content">
+                    <p>{!! substr($blog->short_description, 0, 25) . '...' !!}</p>
+                    <a href="{{ route('front.blog_detail', $blog->slug) }}" class="read-more">Đọc thêm</a>
+                  </div>
+                </div>
+              </article>
+            @endforeach
+          </div>
+          <div class="more-container text-center mt-1">
+            <a href="{{route('front.blog')}}" class="btn btn-outline-lightgray btn-more btn-round"><span>Xem thêm</span><i
+                class="icon-long-arrow-right"></i></a>
+          </div>
         </div>
       </div>
-    </div>
+    @endif
   </main>
 @endsection
 

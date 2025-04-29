@@ -14,6 +14,12 @@
         <li class="@if (Request::segment(2) === 'product') active @endif">
           <a href="{{route('admin.product.index')}}"><i class="fa fa-cube"></i> <span>Sản phẩm</span></a>
         </li>
+        <li class="@if (Request::segment(2) === 'blog-category') active @endif">
+          <a href="{{route('admin.blog_category.index')}}"><i class="fa fa-cube"></i> <span>Danh mục bài viết</span></a>
+        </li>
+        <li class="@if (Request::segment(2) === 'blog') active @endif">
+          <a href="{{route('admin.blog.index')}}"><i class="fa fa-cube"></i> <span>Bài viết</span></a>
+        </li>
         <li class="@if (Request::segment(2) === 'brand') active @endif">
           <a href="{{route('admin.brand.index')}}"><i class="fa fa-cube"></i> <span>Thương hiệu</span></a>
         </li>
@@ -30,8 +36,8 @@
         <li class="submenu">
           <a href="#"><i class="fa fa-laptop"></i><span>Cài đặt</span> <span class="menu-arrow"></span></a>
           <ul style="display: none;">
-            <li><a href="{{route('admin.payment_setting')}}">Thanh toán</a></li>
-            <li><a href="typography.html">Typography</a></li>
+            <li class="@if (Request::segment(2) === 'payment-setting') active @endif"><a href="{{route('admin.payment_setting')}}">Thanh toán</a></li>
+            <li class="@if (Request::segment(2) === 'page') active @endif"><a href="{{route('admin.page.index')}}">Trang</a></li>
             <li><a href="tabs.html">Tabs</a></li>
           </ul>
         </li>
