@@ -1207,11 +1207,15 @@ ul.chat-user-total li {
 	color: #999;
 }
 ul.chat-user-total li i.current-users {
-	color: #009efb;
+	color: #ffca28;
 	padding-right: 5px;
 }
 ul.chat-user-total li i.old-users {
-	color: #eaeaea;
+	color: #4caf50;
+	padding-right: 5px;
+}
+ul.chat-user-total li i.total-users {
+	color: #e91e63;
 	padding-right: 5px;
 }
 .new-patient-table {

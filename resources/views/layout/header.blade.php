@@ -6,14 +6,14 @@
           <li>
             <a href="#">Links</a>
             <ul>
-              <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
+              <li><a href="tel:{{$getSystemSettingApp->phone}}"><i class="icon-phone"></i>Call: {{$getSystemSettingApp->phone}}</a></li>
 							@if(!empty(Auth::check()))
               <li><a href="{{route('front.my_wishlist')}}"><i class="icon-heart-o"></i>My Wishlist<span></span></a></li>
 							@else
 							<li><a href="#signin-modal" data-toggle="modal"><i class="icon-heart-o"></i>My Wishlist<span></span></a></li>
 							@endif
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="about.html">Giới thiệu</a></li>
+              <li><a href="{{route('front.contact')}}">Liên hệ</a></li>
               @if (!empty(Auth::check()))
                 <li><a href="{{route('front.dashboard')}}">{{ Auth::user()->name }}</a></li>
               @else
@@ -33,7 +33,7 @@
           <i class="icon-bars"></i>
         </button>
         <a href="{{ route('front.home') }}" class="logo">
-          <img src="{{ asset('assets/images/demos/demo-10/logo.png') }}" alt="Molla Logo" width="105" height="25">
+          <img src="{{ url($getSystemSettingApp->getLogo()) }}" alt="Molla Logo" style="width: 100px;height: auto;">
         </a>
       </div>
 
