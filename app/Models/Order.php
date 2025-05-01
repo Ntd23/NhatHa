@@ -64,7 +64,49 @@ class Order extends Model
 	public function getShipping() {
 		return $this->belongsTo(ShippingCharge::class,'shipping_id');
 	}
-
+	//for admin
+	static public function getTotalOrder() {
+		return self::select('id')
+		->where('is_payment','=',1)
+		->where('is_delete','=',0)
+		->count();
+	}
+	static public function getTotalTodayOrder() {
+		return self::select('id')
+		->where('is_payment','=',1)
+		->where('is_delete','=',0)
+		->whereDate('created_at','=',date('Y-m-d'))
+		->count();
+	}
+	static public function getTotalAmount() {
+		return self::select('id')
+		->where('is_payment','=',1)
+		->where('is_delete','=',0)
+		->sum('total_amount');
+	}
+	static public function getTotalTodayAmount() {
+		return self::select('id')
+		->where('is_payment','=',1)
+		->where('is_delete','=',0)
+		->whereDate('created_at','=',date('Y-m-d'))
+		->sum('total_amount');
+	}
+	static public function getTotalOrderMonth($startDate, $endDate) {
+		return self::select('id')
+		->where('is_payment','=',1)
+		->where('is_delete','=',0)
+		->whereDate('created_at','>=',$startDate)
+		->whereDate('created_at','<=',$endDate)
+		->count();
+	}
+	static public function getTotalOrderAmountMonth($startDate, $endDate) {
+		return self::select('id')
+		->where('is_payment','=',1)
+		->where('is_delete','=',0)
+		->whereDate('created_at','>=',$startDate)
+		->whereDate('created_at','<=',$endDate)
+		->sum('total_amount');
+	}
 	//for customer
 	static public function getTotalOrderForUser($user_id) {
 		return self::select('id')
@@ -119,5 +161,13 @@ class Order extends Model
 		->where('is_payment','=',1)
 		->where('is_delete','=',0)
 		->first();
+	}
+	static public function getLatestOrders() {
+		return self::select('orders.*')
+		->where('is_payment','=',1)
+		->where('is_delete','=',0)
+		->orderBy('id','desc')
+		->limit(10)
+		->get();
 	}
 }

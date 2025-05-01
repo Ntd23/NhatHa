@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\PageController;
@@ -27,9 +28,7 @@ Route::get('admin/logout', [AuthControllerForAdmin::class, 'admin_logout'])->nam
 
 Route::group(['middleware' => 'is_admin'], function () {
 	Route::prefix('admin')->name('admin.')->group(function () {
-		Route::get('dashboard', function () {
-			return view('admin.dashboard');
-		})->name('dashboard');
+		Route::get('dashboard', [DashboardController::class,'dashboard'])->name('dashboard');
 		Route::controller(AdminController::class)->prefix('admin')->group(function () {
 			Route::get('index', 'index')->name('index');
 			Route::get('create', 'create')->name('create');
@@ -133,6 +132,12 @@ Route::group(['middleware' => 'is_admin'], function () {
 				Route::get('edit/{id}', [PageController::class, 'edit'])->name('edit');
 				Route::post('update/{id}', [PageController::class, 'update'])->name('update');
 			});
+			Route::get('home-setting', 'home_setting')->name('home_setting');
+			Route::post('home-setting', 'update_home_setting')->name('update_home_setting');
+			Route::get('system-setting', 'system_setting')->name('system_setting');
+			Route::post('system-setting', 'update_system_setting')->name('update_system_setting');
+			Route::get('contact', 'contact')->name('contact');
+			Route::get('contact/delete/{id}', 'delete_contact')->name('delete_contact');
 			Route::get('notification', 'notification')->name('notification');
 		});
 	});
@@ -144,7 +149,11 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::name('front.')->group(function () {
-	Route::get('', [HomeController::class, 'home'])->name('home');
+	Route::controller(HomeController::class)->group(function () {
+		Route::get('', 'home')->name('home');
+		Route::get('contact', 'contact')->name('contact');
+		Route::post('contact', 'submit_contact')->name('submit_contact');
+	});
 	Route::post('recent_arrival_category_product', [HomeController::class, 'recent_arrival_category_product'])->name('recent_arrival_category_product');
 	Route::get('search', [ProductControllerFront::class, 'getProductSearch'])->name('search');
 	Route::post('get_filter_product_ajax', [ProductControllerFront::class, 'getFilterProductAjax'])->name('filter_product');
@@ -171,10 +180,10 @@ Route::name('front.')->group(function () {
 		Route::post('add_to_wishlist', [ProductControllerFront::class, 'add_to_wishlist'])->name('add_to_wishlist');
 	});
 	Route::prefix('blog')->controller(HomeController::class)->group(function () {
-		Route::get('', [HomeController::class, 'blog'])->name('blog');
-		Route::get('/{slug}', [HomeController::class, 'blog_detail'])->name('blog_detail');
-		Route::get('/category/{slug}', [HomeController::class, 'blog_category'])->name('blog_category');
-		Route::post('/submit_comment', [HomeController::class, 'submit_comment'])->name('submit_comment');
+		Route::get('', 'blog')->name('blog');
+		Route::get('/{slug}', 'blog_detail')->name('blog_detail');
+		Route::get('/category/{slug}', 'blog_category')->name('blog_category');
+		Route::post('/submit_comment', 'submit_comment')->name('submit_comment');
 	});
 	Route::get('{category?}/{sub_category?}', [ProductControllerFront::class, 'getCategory'])->name('category');
 });

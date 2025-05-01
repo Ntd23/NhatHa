@@ -15,7 +15,7 @@
                   </picture>
                 </figure><!-- End .slide-image -->
                 <div class="intro-content">
-                  <h3 class="intro-subtitle">{!! $slider->title !!}</h3><!-- End .h3 intro-subtitle -->
+                  <h3 class="h2 font-weight-bolder text-danger">{!! $slider->title !!}</h3><!-- End .h3 intro-subtitle -->
                   @if (!empty($slider->button_name) && !empty($slider->button_link))
                     <a href="{{ $slider->button_link }}" class="btn btn-white-primary btn-round">
                       <span>{{ $slider->button_name }}</span>
@@ -35,50 +35,78 @@
     <div class="icon-boxes-container icon-boxes-separator bg-transparent">
       <div class="container">
         <div class="row">
-          <div class="col-sm-6 col-lg-3">
-            <div class="icon-box icon-box-side">
-              <span class="icon-box-icon text-primary">
-                <i class="icon-rocket"></i>
-              </span>
-              <div class="icon-box-content">
-                <h3 class="icon-box-title">Free Shipping</h3><!-- End .icon-box-title -->
-                <p>Orders $50 or more</p>
-              </div><!-- End .icon-box-content -->
-            </div><!-- End .icon-box -->
-          </div><!-- End .col-sm-6 col-lg-3 -->
-
-          <div class="col-sm-6 col-lg-3">
-            <div class="icon-box icon-box-side">
-              <span class="icon-box-icon text-primary">
-                <i class="icon-rotate-left"></i>
-              </span>
-
-              <div class="icon-box-content">
-                <h3 class="icon-box-title">Free Returns</h3><!-- End .icon-box-title -->
-                <p>Within 30 days</p>
-              </div><!-- End .icon-box-content -->
-            </div><!-- End .icon-box -->
-          </div><!-- End .col-sm-6 col-lg-3 -->
-          <div class="col-sm-6 col-lg-3">
-            <div class="icon-box icon-box-side">
-              <span class="icon-box-icon text-primary">
-                <i class="icon-life-ring"></i>
-              </span>
-
-              <div class="icon-box-content">
-                <h3 class="icon-box-title">We Support</h3><!-- End .icon-box-title -->
-                <p>24/7 amazing services</p>
-              </div><!-- End .icon-box-content -->
-            </div><!-- End .icon-box -->
-          </div><!-- End .col-sm-6 col-lg-3 -->
-        </div><!-- End .row -->
+          @if (!empty($getHomeSetting->payment_delivery_title))
+            <div class="col-sm-6 col-lg-3">
+              <div class="icon-box icon-box-side">
+                @if (!empty($getHomeSetting->getPaymentDeliveryImage()))
+                  <span class="icon-box-icon text-primary">
+                    <img src="{{ $getHomeSetting->getPaymentDeliveryImage() }}" style="width: 50px; height: 50px;" class="rounded-circle" alt="">
+                  </span>
+                @endif
+                <div class="icon-box-content">
+                  <h3 class="icon-box-title">{{ $getHomeSetting->payment_delivery_title }}</h3>
+                  <p>{{ $getHomeSetting->payment_delivery_description }}</p>
+                </div>
+              </div>
+            </div>
+          @endif
+          @if (!empty($getHomeSetting->refund_title))
+            <div class="col-sm-6 col-lg-3">
+              <div class="icon-box icon-box-side">
+                @if (!empty($getHomeSetting->getRefundImage()))
+                  <span class="icon-box-icon text-primary">
+                    <img src="{{ $getHomeSetting->getRefundImage() }}" style="width: 50px; height: 50px;" class="rounded-circle" alt="">
+                  </span>
+                @endif
+                <div class="icon-box-content">
+                  <h3 class="icon-box-title">{{ $getHomeSetting->refund_title }}</h3>
+                  <p>{{ $getHomeSetting->refund_description }}</p>
+                </div>
+              </div>
+            </div>
+          @endif
+          @if (!empty($getHomeSetting->suport_title))
+            <div class="col-sm-6 col-lg-3">
+              <div class="icon-box icon-box-side">
+                @if (!empty($getHomeSetting->getSupportImage()))
+                  <span class="icon-box-icon text-primary">
+                    <img src="{{ $getHomeSetting->getSupportImage() }}" style="width: 50px; height: 50px;" class="rounded-circle" alt="">
+                  </span>
+                @endif
+                <div class="icon-box-content">
+                  <h3 class="icon-box-title">{{ $getHomeSetting->suport_title }}</h3>
+                  <p>{{ $getHomeSetting->suport_description }}</p>
+                </div>
+              </div>
+            </div>
+          @endif
+          @if (!empty($getHomeSetting->signup_title))
+            <div class="col-sm-6 col-lg-3">
+              <div class="icon-box icon-box-side">
+                @if (!empty($getHomeSetting->getSignupImage()))
+                  <span class="icon-box-icon text-primary">
+                    <img src="{{ $getHomeSetting->getSignupImage() }}" style="width: 50px; height: 50px;" class="rounded-circle" alt="">
+                  </span>
+                @endif
+                <div class="icon-box-content">
+                  <h3 class="icon-box-title">{{ $getHomeSetting->signup_title }}</h3>
+                  <p>{{ $getHomeSetting->signup_description }}</p>
+                </div>
+              </div>
+            </div>
+          @endif
+        </div>
       </div>
-    </div><!-- End .icon-boxes-container -->
+    </div>
 
     {{-- banner category  --}}
     @if (!empty($getCategory->count()))
       <div class="container">
+        <h2 class="title-lg mb-2 text-center">
+          {{ !empty($getHomeSetting->shop_category_title) ? $getHomeSetting->shop_category_title : 'Mua sắm theo danh mục' }}
+        </h2>
         <div class="row justify-content-center">
+
           @foreach ($getCategory as $category)
             @if (!empty($category->getImage()))
               <div class="col-sm-5 col-md-3">
@@ -105,7 +133,10 @@
     <div class="mb-4"></div><!-- End .mb-4 -->
     <div class="container">
       <div class="heading heading-center mb-3">
-        <h2 class="title-lg mb-2">Top Selling Products</h2><!-- End .title-lg text-center -->
+        <h2 class="title-lg mb-2">
+          {{ !empty($getHomeSetting->trendy_product_title) ? $getHomeSetting->trendy_product_title : 'Sản phẩm thịnh hành' }}
+
+        </h2>
         <ul class="nav nav-pills justify-content-center" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="top-all-link" data-toggle="tab" href="#top-all-tab" role="tab"
@@ -142,22 +173,7 @@
     </div>
     {{-- refund, payment delivery  --}}
 
-    <div class="container">
-      <hr>
-      <div class="row justify-content-center">
-        <div class="col-lg-4 col-sm-6">
-          <div class="icon-box icon-box-card text-center">
-            <span class="icon-box-icon">
-              <img style="width: 50px;" src="" alt="">
-            </span>
-            <div class="icon-box-content">
-              <h3 class="icon-box-title">dasdasd</h3>
-              <p>fsefesf</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="mb-5"></div><!-- End .mb5 -->
     @if (!empty($getBlog->count()))
       <div class="blog-posts">
@@ -209,8 +225,8 @@
             @endforeach
           </div>
           <div class="more-container text-center mt-1">
-            <a href="{{route('front.blog')}}" class="btn btn-outline-lightgray btn-more btn-round"><span>Xem thêm</span><i
-                class="icon-long-arrow-right"></i></a>
+            <a href="{{ route('front.blog') }}" class="btn btn-outline-lightgray btn-more btn-round"><span>Xem
+                thêm</span><i class="icon-long-arrow-right"></i></a>
           </div>
         </div>
       </div>

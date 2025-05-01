@@ -1,3 +1,6 @@
+ @php
+  $getSystemSettingApp = App\Models\SystemSetting::getSingle();
+  @endphp
 <!DOCTYPE html>
 <html lang="en">
 
