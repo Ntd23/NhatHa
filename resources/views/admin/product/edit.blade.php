@@ -34,12 +34,6 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-form-label col-md-2">SKU</label>
-                <div class="col-md-10">
-                  <input type="text" class="form-control" name="sku" value="{{ old('sku', $product->sku) }}">
-                </div>
-              </div>
-              <div class="form-group row">
                 <label class="col-form-label col-md-2">Danh mục</label>
                 <div class="col-md-10">
                   <select class="form-control" name="category_id" id="ChangeCategory">

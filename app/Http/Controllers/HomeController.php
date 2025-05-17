@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMail;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\BlogComment;
@@ -14,6 +15,7 @@ use App\Models\Slider;
 use App\Models\SystemSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -118,8 +120,80 @@ class HomeController extends Controller
 		$save->save();
 
 		$getSystemSetting = SystemSetting::getSingle();
-		// Mail::to($getSystemSetting->submit_email)->send(new ContactMail($save));
+		Mail::to($getSystemSetting->submit_email)->send(new ContactMail($save));
 
 		return redirect()->back()->with('success', 'Chúng tôi sẽ phản hồi đến bạn trong thời gian sớm nhất');
+	}
+	public function about() {
+		$getPage = Page::getSlug('about');
+    $data['getPage'] = $getPage;
+
+    $data['meta_title'] = $getPage->meta_title;
+    $data['meta_desciption'] = $getPage->meta_desciption;
+    $data['meta_keywords'] = $getPage->meta_keywords;
+    return view('page.about', $data);
+	}
+	public function faqs() {
+		$getPage = Page::getSlug('faqs');
+    $data['getPage'] = $getPage;
+
+    $data['meta_title'] = $getPage->meta_title;
+    $data['meta_desciption'] = $getPage->meta_desciption;
+    $data['meta_keywords'] = $getPage->meta_keywords;
+    return view('page.faqs', $data);
+	}
+	public function payment_methods() {
+		$getPage = Page::getSlug('payment-methods');
+    $data['getPage'] = $getPage;
+
+    $data['meta_title'] = $getPage->meta_title;
+    $data['meta_desciption'] = $getPage->meta_desciption;
+    $data['meta_keywords'] = $getPage->meta_keywords;
+    return view('page.payment_methods', $data);
+	}
+	public function money_back_guarantee() {
+		$getPage = Page::getSlug('money-back-guarantee');
+    $data['getPage'] = $getPage;
+
+    $data['meta_title'] = $getPage->meta_title;
+    $data['meta_desciption'] = $getPage->meta_desciption;
+    $data['meta_keywords'] = $getPage->meta_keywords;
+    return view('page.money_back_guarantee', $data);
+	}
+	public function returns() {
+		$getPage = Page::getSlug('returns');
+    $data['getPage'] = $getPage;
+
+    $data['meta_title'] = $getPage->meta_title;
+    $data['meta_desciption'] = $getPage->meta_desciption;
+    $data['meta_keywords'] = $getPage->meta_keywords;
+    return view('page.returns', $data);
+	}
+	public function shipping() {
+		$getPage = Page::getSlug('shipping');
+    $data['getPage'] = $getPage;
+
+    $data['meta_title'] = $getPage->meta_title;
+    $data['meta_desciption'] = $getPage->meta_desciption;
+    $data['meta_keywords'] = $getPage->meta_keywords;
+    return view('page.shipping', $data);
+	}
+	public function terms_conditions() {
+		$getPage = Page::getSlug('terms-conditions');
+    $data['getPage'] = $getPage;
+
+    $data['meta_title'] = $getPage->meta_title;
+    $data['meta_desciption'] = $getPage->meta_desciption;
+    $data['meta_keywords'] = $getPage->meta_keywords;
+    return view('page.terms_conditions', $data);
+	}
+	public function privacy_policy() {
+		$getPage = Page::getSlug('privacy-policy');
+    $data['getPage'] = $getPage;
+
+    $data['meta_title'] = $getPage->meta_title;
+    $data['meta_desciption'] = $getPage->meta_desciption;
+    $data['meta_keywords'] = $getPage->meta_keywords;
+    return view('page.privacy_policy', $data);
 	}
 }

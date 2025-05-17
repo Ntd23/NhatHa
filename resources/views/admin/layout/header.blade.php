@@ -9,7 +9,7 @@
   <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
   <ul class="nav user-menu float-right">
 	<li class="nav-item" style="width: 200px;">
-		<a href="{{route('front.home')}}" class="d-md-inline-block d-none align-items-center text-center w-100 p-0">
+		<a href="{{route('front.home')}}" target="_blank" class="d-md-inline-block d-none align-items-center text-center w-100 p-0">
 			<span>XEM TRANG WEB</span><i class="fa fa-globe"></i>
 		</a>
 	</li>

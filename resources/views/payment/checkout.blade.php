@@ -166,6 +166,10 @@
                                         <label for="CreditCard" class="custom-control-label">Stripe</label>
                                     </div>
                                     @endif
+																		   <div class="custom-control custom-radio mt-0">
+                                        <input type="radio" name="payment_method" value="momo" id="momo" class="custom-control-input">
+                                        <label for="momo" class="custom-control-label">Momo</label>
+                                    </div>
                                 </div><!-- End .accordion -->
 
                                 <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">

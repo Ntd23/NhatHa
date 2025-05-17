@@ -120,10 +120,6 @@ Route::group(['middleware' => 'is_admin'], function () {
 			Route::post('update/{id}', 'update')->name('blog.update');
 			Route::get('delete/{id}', 'destroy')->name('blog.delete');
 		});
-		Route::prefix('payment-setting')->controller(PageController::class)->group(function () {
-			Route::get('', 'payment_setting')->name('payment_setting');
-			Route::post('', 'update_payment_setting')->name('update_payment_setting');
-		});
 		Route::controller(PageController::class)->group(function () {
 			Route::prefix('page')->name('page.')->group(function () {
 				Route::get('index', [PageController::class, 'index'])->name('index');
@@ -132,6 +128,10 @@ Route::group(['middleware' => 'is_admin'], function () {
 				Route::get('edit/{id}', [PageController::class, 'edit'])->name('edit');
 				Route::post('update/{id}', [PageController::class, 'update'])->name('update');
 			});
+			Route::get('payment-setting', 'payment_setting')->name('payment_setting');
+			Route::post('payment-setting', 'update_payment_setting')->name('update_payment_setting');
+			Route::get('smtp-setting', 'smtp_setting')->name('smtp_setting');
+			Route::post('smtp-setting', 'update_smtp_setting')->name('update_smtp_setting');
 			Route::get('home-setting', 'home_setting')->name('home_setting');
 			Route::post('home-setting', 'update_home_setting')->name('update_home_setting');
 			Route::get('system-setting', 'system_setting')->name('system_setting');
@@ -147,12 +147,28 @@ Route::group(['middleware' => 'is_admin'], function () {
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('active/{id}',[AuthController::class,'active_email'])->name('active_email');
+Route::get('forgot-password',[AuthController::class,'forgot_password'])->name('forgot_password');
+Route::post('forgot-password',[AuthController::class,'auth_forgot_password'])->name('forgot_password');
+Route::get('reset/{token}',[AuthController::class,'reset_password'])->name('reset_password');
+Route::post('reset/{token}',[AuthController::class,'auth_reset_password'])->name('auth_reset_password');
+
+Route::get('login-google', [AuthController::class, 'login_google_form'])->name('login_google_form');
+Route::get('login-google-callback', [AuthController::class, 'login_google_callback'])->name('login_google_callback');
 
 Route::name('front.')->group(function () {
 	Route::controller(HomeController::class)->group(function () {
 		Route::get('', 'home')->name('home');
 		Route::get('contact', 'contact')->name('contact');
 		Route::post('contact', 'submit_contact')->name('submit_contact');
+		Route::get('about','about')->name('about');
+		Route::get('faqs','faqs')->name('faqs');
+		Route::get('payment-methods','payment_methods')->name('payment_methods');
+		Route::get('money-back-guarantee','money_back_guarantee')->name('money_back_guarantee');
+		Route::get('returns','returns')->name('returns');
+		Route::get('shipping','shipping')->name('shipping');
+		Route::get('terms-conditions','terms_conditions')->name('terms_conditions');
+		Route::get('privacy-policy','privacy_policy')->name('privacy_policy');
 	});
 	Route::post('recent_arrival_category_product', [HomeController::class, 'recent_arrival_category_product'])->name('recent_arrival_category_product');
 	Route::get('search', [ProductControllerFront::class, 'getProductSearch'])->name('search');

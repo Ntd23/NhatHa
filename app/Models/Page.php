@@ -17,6 +17,10 @@ class Page extends Model
 	{
 		return self::select('pages.*')->get();
 	}
+	static public function getRecordExceptHome()
+	{
+		return self::select('pages.*')->where('slug','!=','home')->get();
+	}
 	static public function getSlug($slug)
 	{
 		return self::where('slug', '=', $slug)->first();

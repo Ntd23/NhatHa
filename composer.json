@@ -8,6 +8,7 @@
         "php": "^8.2",
         "darryldecode/cart": "^4.2",
         "laravel/framework": "^11.0",
+        "laravel/socialite": "^5.20",
         "laravel/tinker": "^2.9",
         "stripe/stripe-php": "^17.1"
     },

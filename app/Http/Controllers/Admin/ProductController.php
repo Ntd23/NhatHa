@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -39,7 +41,7 @@ class ProductController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(Request $request)
+	public function store(StoreProductRequest $request)
 	{
 		$title = trim($request->title);
 		$product = new Product;
@@ -86,14 +88,13 @@ class ProductController extends Controller
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(Request $request, string $id)
+	public function update(UpdateProductRequest $request, string $id)
 	{
 		// dd($request);
 		$product = Product::getSingle($id);
     if (!empty($product)) {
       //store product
       $product->title = trim($request->title);
-      $product->sku = trim($request->sku);
       $product->category_id = trim($request->category_id);
       $product->sub_category_id = trim($request->sub_category_id);
       $product->brand_id = trim($request->brand_id);
