@@ -13,7 +13,7 @@
   <main class="main">
     <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
       <div class="container">
-        <h1 class="page-title">Bảng điều khiển</h1>
+        <h1 class="page-title">Đơn hàng của tôi</h1>
       </div>
     </div>
 

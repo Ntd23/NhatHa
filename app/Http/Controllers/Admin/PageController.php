@@ -8,6 +8,7 @@ use App\Models\HomeSetting;
 use App\Models\Notification;
 use App\Models\Page;
 use App\Models\PaymentSetting;
+use App\Models\SMTP;
 use App\Models\SystemSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -47,7 +48,7 @@ class PageController extends Controller
 	{
 		$page = Page::getSingle($id);
 		$page->name = trim($request->name);
-		$page->slug = str_replace(' ', '-', trim($request->name));
+		$page->slug = strtolower(str_replace(' ', '-', trim($request->name)));
 		$page->title = trim($request->title);
 		$page->description = trim($request->description);
 		$page->meta_title = trim($request->meta_title);
@@ -240,6 +241,27 @@ class PageController extends Controller
 		$save->is_cash_delivery = !empty($request->is_cash_delivery) ? 1 : 0;
 		$save->save();
 		return redirect()->back()->with('success', 'Cài đặt thanh toán đã được cập nhật!');
+	}
+	public function smtp_setting() {
+		$data['getRecord'] = SMTP::getSingle();
+    $data['header_title'] = 'SMTP';
+
+    return view('admin.setting.smtp_setting', $data);
+	}
+	public function update_smtp_setting(Request $request) {
+		$save = SMTP::getSingle();
+    $save->name = trim($request->name);
+    $save->mail_mailer = trim($request->mail_mailer);
+    $save->mail_host = trim($request->mail_host);
+    $save->mail_port = trim($request->mail_port);
+    $save->mail_username = trim($request->mail_username);
+    $save->mail_password = trim($request->mail_password);
+    $save->mail_encryption = trim($request->mail_encryption);
+    $save->mail_from_address = trim($request->mail_from_address);
+
+    $save->save();
+
+    return redirect()->back()->with('success', 'Cấu hình SMTP đã được cập nhật!');
 	}
 	public function contact() {
 		$data['getRecord'] = Contact::getRecord();

@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Session;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as SessionStripe;
 
+use function PHPSTORM_META\type;
+
 class PaymentController extends Controller
 {
 	public function add_to_cart(Request $request)
@@ -212,8 +214,8 @@ class PaymentController extends Controller
 
 					//notify
 					$user_id = 1;
-					$url= route('admin.order.detail',$getOrder->id);
-					$msg= 'Đơn hàng #'. $getOrder->order_number .' đã được đặt';
+					$url = route('admin.order.detail', $getOrder->id);
+					$msg = 'Đơn hàng #' . $getOrder->order_number . ' đã được đặt';
 					Notification::insertRecord($user_id, $url, $msg);
 
 					\Cart::clear();
@@ -248,6 +250,49 @@ class PaymentController extends Controller
 					$data['setPublicKey'] = $getPaymentSetting->stripe_public_key;
 
 					return view('payment.stripe_charge', $data);
+				} elseif ($getOrder->payment_method == 'momo') {
+					$order_id = $order_id . "" . time();
+					$endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+					$partnerCode = 'MOMOBKUN20180529';
+					$accessKey = 'klm05TvNBzhg7h7j';
+					$secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+					$orderInfo = "Thanh toán qua MoMo";
+					$amount = $getOrder->total_amount;
+					$redirectUrl = route('front.checkout');
+					$ipnUrl = route('front.checkout');
+					$extraData = "";
+					$requestId = time() . "";
+					$requestType = "payWithATM";
+					$rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $order_id . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+					$signature = hash_hmac("sha256", $rawHash, $secretKey);
+					$data = array(
+						'partnerCode' => $partnerCode,
+						'partnerName' => "Nhật Hạ",
+						"storeId" => "Nhật Hạ",
+						'requestId' => $requestId,
+						'amount' => $amount,
+						'orderId' => $order_id,
+						'orderInfo' => $orderInfo,
+						'redirectUrl' => $redirectUrl,
+						'ipnUrl' => $ipnUrl,
+						'lang' => 'vi',
+						'extraData' => $extraData,
+						'requestType' => $requestType,
+						'signature' => $signature
+					);
+					$result = $this->execPostRequest($endpoint, json_encode($data));
+					$jsonResult = json_decode($result, true);  // decode json
+								$getOrder->is_payment = 1;
+			$getOrder->transaction_id = $order_id;
+			$getOrder->save();
+			//notify
+			$user_id = 1;
+			$url = route('admin.order.detail', $getOrder->id);
+			$msg = 'Đơn hàng #' . $getOrder->order_number . ' đã được đặt';
+			Notification::insertRecord($user_id, $url, $msg);
+
+			\Cart::clear();
+					return redirect()->to($jsonResult['payUrl']);
 				}
 			} else {
 				abort(404);
@@ -255,6 +300,28 @@ class PaymentController extends Controller
 		} else {
 			abort(404);
 		}
+	}
+	public function execPostRequest($url, $data)
+	{
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt(
+			$ch,
+			CURLOPT_HTTPHEADER,
+			array(
+				'Content-Type: application/json',
+				'Content-Length: ' . strlen($data)
+			)
+		);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		//execute post
+		$result = curl_exec($ch);
+		//close connection
+		curl_close($ch);
+		return $result;
 	}
 	public function stripe_success_payment(Request $request)
 	{
@@ -272,8 +339,8 @@ class PaymentController extends Controller
 
 			//notify
 			$user_id = 1;
-			$url= route('admin.order.detail',$getOrder->id);
-			$msg= 'Đơn hàng #'. $getOrder->order_number .' đã được đặt';
+			$url = route('admin.order.detail', $getOrder->id);
+			$msg = 'Đơn hàng #' . $getOrder->order_number . ' đã được đặt';
 			Notification::insertRecord($user_id, $url, $msg);
 
 			\Cart::clear();

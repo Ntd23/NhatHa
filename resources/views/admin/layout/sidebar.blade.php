@@ -42,6 +42,9 @@
       <li class="@if (Request::segment(2) === 'payment-setting') active @endif">
         <a href="{{ route('admin.payment_setting') }}"><i class="fa fa-credit-card"></i> <span>Thanh toán</span></a>
       </li>
+      <li class="@if (Request::segment(2) === 'smtp-setting') active @endif">
+        <a href="{{ route('admin.smtp_setting') }}"><i class="fa fa-credit-card"></i> <span>SMTP</span></a>
+      </li>
       <li class="@if (Request::segment(2) === 'page') active @endif">
         <a href="{{ route('admin.page.index') }}"><i class="fa fa-file-text-o"></i> <span>Trang</span></a>
       </li>
