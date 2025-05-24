@@ -253,9 +253,9 @@ class PaymentController extends Controller
 				} elseif ($getOrder->payment_method == 'momo') {
 					$order_id = $order_id . "" . time();
 					$endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-					$partnerCode = 'MOMOBKUN20180529';
-					$accessKey = 'klm05TvNBzhg7h7j';
-					$secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+					$partnerCode = $getPaymentSetting->momo_partner_code;
+					$accessKey = $getPaymentSetting->momo_access_key;
+					$secretKey = $getPaymentSetting->momo_secret_key;
 					$orderInfo = "Thanh toán qua MoMo";
 					$amount = $getOrder->total_amount;
 					$redirectUrl = route('front.checkout');
@@ -282,16 +282,16 @@ class PaymentController extends Controller
 					);
 					$result = $this->execPostRequest($endpoint, json_encode($data));
 					$jsonResult = json_decode($result, true);  // decode json
-								$getOrder->is_payment = 1;
-			$getOrder->transaction_id = $order_id;
-			$getOrder->save();
-			//notify
-			$user_id = 1;
-			$url = route('admin.order.detail', $getOrder->id);
-			$msg = 'Đơn hàng #' . $getOrder->order_number . ' đã được đặt';
-			Notification::insertRecord($user_id, $url, $msg);
+					$getOrder->is_payment = 1;
+					$getOrder->transaction_id = $order_id;
+					$getOrder->save();
+					//notify
+					$user_id = 1;
+					$url = route('admin.order.detail', $getOrder->id);
+					$msg = 'Đơn hàng #' . $getOrder->order_number . ' đã được đặt';
+					Notification::insertRecord($user_id, $url, $msg);
 
-			\Cart::clear();
+					\Cart::clear();
 					return redirect()->to($jsonResult['payUrl']);
 				}
 			} else {

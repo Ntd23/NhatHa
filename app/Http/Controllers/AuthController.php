@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
+
 class AuthController extends Controller
 {
 	public function register(RegisterRequest $request)
@@ -44,12 +45,13 @@ class AuthController extends Controller
 		}
 		echo json_encode($json);
 	}
-	public function active_email($id) {
-		$id= base64_decode($id);
-		$user= User::getSingle($id);
-		$user->email_verified_at= date('Y-m-d H:i:s');
+	public function active_email($id)
+	{
+		$id = base64_decode($id);
+		$user = User::getSingle($id);
+		$user->email_verified_at = date('Y-m-d H:i:s');
 		$user->save();
-		return redirect(route('front.home'))->with('success','Tài khoản đã kích hoạt');
+		return redirect(route('front.home'))->with('success', 'Tài khoản đã kích hoạt');
 	}
 	public function login(LoginRequest $request)
 	{
@@ -78,73 +80,95 @@ class AuthController extends Controller
 		}
 		echo json_encode($json);
 	}
-	  public function login_google_form()
-  {
-    return Socialite::driver('google')->redirect();
-  }
-	  public function login_google_callback()
-  {
-    try {
-      $user = Socialite::driver('google')->user();
-      $user_exist = User::where('google_id', $user->id)->first();
-      if ($user_exist) {
-        Auth::login($user_exist);
-        return redirect('/')->with('success', 'Khách hàng đăng nhập thành công');
-      } else {
-        $newUser = User::updateOrCreate(['email' => $user->email], [
-          'name' => $user->name,
-          'google_id' => $user->id,
-          'password' => encrypt('123456dummy')
-        ]);
-        Auth::login($newUser);
-        return redirect('/')->with('success', 'Khách hàng đăng nhập thành công');
-      }
-    } catch (\Exception $e) {
-      \Log::error('Google Login Error:', ['error' => $e->getMessage()]); // Log lỗi
-      return redirect('/login-google')->with('error', 'Đăng nhập thất bại: ' . $e->getMessage());
-    }
-  }
+	public function login_google_form()
+	{
+		return Socialite::driver('google')->redirect();
+	}
+	public function login_google_callback()
+	{
+		try {
+			$user = Socialite::driver('google')->user();
+			$user_exist = User::where('google_id', $user->id)->first();
+			if ($user_exist) {
+				Auth::login($user_exist);
+				return redirect('/')->with('success', 'Khách hàng đăng nhập thành công');
+			} else {
+				$newUser = User::updateOrCreate(['email' => $user->email], [
+					'name' => $user->name,
+					'google_id' => $user->id,
+					'password' => encrypt('123456dummy')
+				]);
+				// $newUser= new User;
+				// $newUser->email= $user->email;
+				// $newUser->name= $user->name;
+				// $newUser->google_id= $user->id;
+				// $newUser->password= encrypt('123456dummy');
+				// $newUser->save();
+				//send mail
+				try {
+					Mail::to($newUser->email)->send(new RegisterMail($newUser));
+				} catch (\Exception $e) {
+				}
+				//notify
+				$user_id = 1;
+				$url = route('admin.customer');
+				$msg = 'Khách hàng @' . $newUser->name . ' đã đăng ký tài khoản';
+				Notification::insertRecord($user_id, $url, $msg);
+
+				Auth::login($newUser);
+				return redirect('/')->with('success', 'Khách hàng đăng nhập thành công');
+			}
+		} catch (\Exception $e) {
+			\Log::error('Google Login Error:', ['error' => $e->getMessage()]); // Log lỗi
+			return redirect('/login-google')->with('error', 'Đăng nhập thất bại: ' . $e->getMessage());
+		}
+	}
 	public function logout()
 	{
 		Auth::logout();
 		return redirect(route('front.home'));
 	}
-	public function forgot_password(Request $request) {
-		$data['meta_title']='Quên mật khẩu';
+	public function forgot_password(Request $request)
+	{
+		$data['meta_title'] = 'Quên mật khẩu';
 		return view('auth.forgot', $data);
 	}
-	public function auth_forgot_password(Request $request) {
-		$user= User::where('email','=',$request->email)->first();
-		if(!empty($user)) {
-			$user->remember_token= \Str::random(30);
+	public function auth_forgot_password(Request $request)
+	{
+		$user = User::where('email', '=', $request->email)->first();
+		if (!empty($user)) {
+			$user->remember_token = \Str::random(30);
 			$user->save();
 			try {
 				Mail::to($user->email)->send(new ForgotPasswordMail($user));
-			}catch(\Exception $e) {}
-			return redirect()->back()->with('success','Kiểm tra email để cập nhật lại mật khẩu');
-		}else {
-			return redirect()->back()->with('warning','Email không đúng');
+			} catch (\Exception $e) {
+			}
+			return redirect()->back()->with('success', 'Kiểm tra email để cập nhật lại mật khẩu');
+		} else {
+			return redirect()->back()->with('warning', 'Email không đúng');
 		}
 	}
-	public function reset_password($token) {
-		$user= User::where('remember_token','=',$token)->first();
-		if(!empty($user)) {
-			$data['user']= $user;
-			$data['meta_title']='Reset password';
+	public function reset_password($token)
+	{
+		$user = User::where('remember_token', '=', $token)->first();
+		if (!empty($user)) {
+			$data['user'] = $user;
+			$data['meta_title'] = 'Reset password';
 			return view('auth.reset_password', $data);
-		}else {
+		} else {
 			abort(404);
 		}
 	}
-	public function auth_reset_password($token, Request $request) {
-		if($request->password===$request->cpassword) {
-			$user= User::where('remember_token','=',$token)->first();
-			$user->password= Hash::make($request->password);
-			$user->remember_token= \Str::random(30);
+	public function auth_reset_password($token, Request $request)
+	{
+		if ($request->password === $request->cpassword) {
+			$user = User::where('remember_token', '=', $token)->first();
+			$user->password = Hash::make($request->password);
+			$user->remember_token = \Str::random(30);
 			$user->save();
-			return redirect(route('front.home'))->with('success','Khôi phục mật khẩu thành công');
-		}else {
-			return redirect()->back()->with('warning','Mật khẩu không khớp');
+			return redirect(route('front.home'))->with('success', 'Khôi phục mật khẩu thành công');
+		} else {
+			return redirect()->back()->with('warning', 'Mật khẩu không khớp');
 		}
 	}
 }

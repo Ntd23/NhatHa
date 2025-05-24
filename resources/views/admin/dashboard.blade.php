@@ -90,7 +90,7 @@
 <div class="page-wrapper">
     <div class="content">
         <div class="row">
-            <div class="col-12 col-sm-6 mb-4">
+            <div class="col-12 col-sm-4 mb-4">
                 <div class="dash-widget">
                     <span class="dash-widget-bg1"><i class="fa fa-credit-card" aria-hidden="true"></i></span>
                     <div class="dash-widget-info text-right">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 mb-4">
+            <div class="col-12 col-sm-4 mb-4">
                 <div class="dash-widget">
                     <span class="dash-widget-bg2"><i class="fa fa-credit-card" aria-hidden="true"></i></span>
                     <div class="dash-widget-info text-right">
@@ -108,7 +108,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 mb-4">
+            <div class="col-12 col-sm-4 mb-4">
+                <div class="dash-widget">
+                    <span class="dash-widget-bg2"><i class="fa fa-credit-card" aria-hidden="true"></i></span>
+                    <div class="dash-widget-info text-right">
+                        <h3>{{ $TotalMonthOrder }}</h3>
+                        <span class="widget-title2">Đơn hàng trong tháng<i class="fa fa-check" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 mb-4">
                 <div class="dash-widget">
                     <span class="dash-widget-bg3"><i class="fa fa-dollar" aria-hidden="true"></i></span>
                     <div class="dash-widget-info text-right">
@@ -117,7 +126,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 mb-4">
+            <div class="col-12 col-sm-4 mb-4">
                 <div class="dash-widget">
                     <span class="dash-widget-bg4"><i class="fa fa-dollar" aria-hidden="true"></i></span>
                     <div class="dash-widget-info text-right">
@@ -126,7 +135,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 mb-4">
+            <div class="col-12 col-sm-4 mb-4">
+                <div class="dash-widget">
+                    <span class="dash-widget-bg4"><i class="fa fa-dollar" aria-hidden="true"></i></span>
+                    <div class="dash-widget-info text-right">
+                        <h3>@money($TotalMonthAmount)</h3>
+                        <span class="widget-title4">Doanh thu trong tháng<i class="fa fa-check" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 mb-4">
                 <div class="dash-widget">
                     <span class="dash-widget-bg3"><i class="fa fa-users" aria-hidden="true"></i></span>
                     <div class="dash-widget-info text-right">
@@ -135,12 +153,21 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 mb-4">
+            <div class="col-12 col-sm-4 mb-4">
                 <div class="dash-widget">
                     <span class="dash-widget-bg4"><i class="fa fa-users" aria-hidden="true"></i></span>
                     <div class="dash-widget-info text-right">
                         <h3>{{ $TotalTodayCustomer }}</h3>
                         <span class="widget-title4">Khách hàng trong ngày<i class="fa fa-check" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 mb-4">
+                <div class="dash-widget">
+                    <span class="dash-widget-bg4"><i class="fa fa-users" aria-hidden="true"></i></span>
+                    <div class="dash-widget-info text-right">
+                        <h3>{{ $TotalMonthCustomer }}</h3>
+                        <span class="widget-title4">Khách hàng trong tháng<i class="fa fa-check" aria-hidden="true"></i></span>
                     </div>
                 </div>
             </div>

@@ -78,6 +78,14 @@ class Order extends Model
 		->whereDate('created_at','=',date('Y-m-d'))
 		->count();
 	}
+	static public function getTotalMonthOrder() {
+		return self::select('id')
+		->where('is_payment','=',1)
+		->where('is_delete','=',0)
+		->whereMonth('created_at','=',date('m'))
+		->whereYear('created_at','=',date('Y'))
+		->count();
+	}
 	static public function getTotalAmount() {
 		return self::select('id')
 		->where('is_payment','=',1)
@@ -89,6 +97,14 @@ class Order extends Model
 		->where('is_payment','=',1)
 		->where('is_delete','=',0)
 		->whereDate('created_at','=',date('Y-m-d'))
+		->sum('total_amount');
+	}
+	static public function getTotalMonthAmount() {
+		return self::select('id')
+		->where('is_payment','=',1)
+		->where('is_delete','=',0)
+		->whereMonth('created_at','=',date('m'))
+		->whereYear('created_at','=',date('Y'))
 		->sum('total_amount');
 	}
 	static public function getTotalOrderMonth($startDate, $endDate) {

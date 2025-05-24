@@ -50,6 +50,27 @@
                     value="{{ old('stripe_secret_key', !empty($getRecord->stripe_secret_key) ? $getRecord->stripe_secret_key : '') }}"">
                 </div>
               </div>
+							<div class="form-group row">
+                <label class="col-form-label col-md-3">MoMo Partner Code</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" name="momo_partner_code"
+                    value="{{ old('momo_partner_code', !empty($getRecord->momo_partner_code) ? $getRecord->momo_partner_code : '') }}"">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-form-label col-md-3">MoMo Access Key</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" name="momo_access_key"
+                    value="{{ old('momo_access_key', !empty($getRecord->momo_access_key) ? $getRecord->momo_access_key : '') }}"">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-form-label col-md-3">MoMo Secret Key</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" name="momo_secret_key"
+                    value="{{ old('momo_secret_key', !empty($getRecord->momo_secret_key) ? $getRecord->momo_secret_key : '') }}"">
+                </div>
+              </div>
             </div>
             <div class="m-t-20 text-center">
               <button class="btn btn-primary submit-btn">Cập nhật</button>

@@ -6,7 +6,7 @@
           <li>
             <a href="#">Links</a>
             <ul>
-              <li><a href="tel:{{ $getSystemSettingApp->phone }}"><i class="icon-phone"></i>Call:
+              <li><a href="tel:{{ $getSystemSettingApp->phone }}"><i class="icon-phone"></i>Gọi:
                   {{ $getSystemSettingApp->phone }}</a></li>
               @if (!empty(Auth::check()))
                 <li><a href="{{ route('front.my_wishlist') }}"><i class="icon-heart-o"></i>My Wishlist<span></span></a>

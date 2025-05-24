@@ -173,10 +173,9 @@
                                 </div><!-- End .accordion -->
 
                                 <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                                    <span class="btn-text">Place Order</span>
-                                    <span class="btn-hover-text">Proceed to Checkout</span>
+                                    <span class="btn-text">Đặt ngay</span>
+                                    <span class="btn-hover-text">Xử lý thanh toán</span>
                                 </button><br><br>
-                                <img src="{{ url('assets/images/payments-summary.png') }}">
                             </div><!-- End .summary -->
                         </aside><!-- End .col-lg-3 -->
                     </div>

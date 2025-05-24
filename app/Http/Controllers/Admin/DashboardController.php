@@ -14,10 +14,13 @@ class DashboardController extends Controller
 		//total
 		$data['TotalOrder'] = Order::getTotalOrder();
 		$data['TotalTodayOrder'] = Order::getTotalTodayOrder();
+		$data['TotalMonthOrder'] = Order::getTotalMonthOrder();
 		$data['TotalAmount'] = Order::getTotalAmount();
 		$data['TotalTodayAmount'] = Order::getTotalTodayAmount();
+		$data['TotalMonthAmount'] = Order::getTotalMonthAmount();
 		$data['TotalCustomer'] = User::getTotalCustomer();
 		$data['TotalTodayCustomer'] = User::getTotalTodayCustomer();
+		$data['TotalMonthCustomer'] = User::getTotalMonthCustomer();
 		$data['getLatestOrders'] = Order::getLatestOrders();
 		//chart
 		if (!empty($request->year)) $year = $request->year;

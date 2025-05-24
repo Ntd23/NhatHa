@@ -23,7 +23,6 @@
                     <!-- Useful Links -->
                     <div class="col-12 col-sm-6 col-lg-3 mb-4 mb-lg-0 text-center text-lg-left">
                         <div class="widget">
-                            <h4 class="widget-title">Useful Links</h4>
                             <ul class="widget-list">
                                 @php
                                     $pages = \App\Models\Page::getRecord();
@@ -47,7 +46,7 @@
                     <!-- Customer Service -->
                     <div class="col-12 col-sm-6 col-lg-3 mb-4 mb-lg-0 text-center text-lg-left">
                         <div class="widget">
-                            <h4 class="widget-title">Customer Service</h4>
+                            <h4 class="widget-title">Information</h4>
                             <ul class="widget-list">
                                 @php
                                     $pages = \App\Models\Page::getRecord();

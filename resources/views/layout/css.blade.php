@@ -180,7 +180,9 @@
     padding: 2px 5px;
     border-radius: 50%;
   }
-
+	.btn-cart>span:hover {
+		color: white;
+	}
   /* Custom styles for the footer */
   .footer-light {
     background-color: rgb(105, 126, 148);
