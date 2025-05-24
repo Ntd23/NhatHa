@@ -239,6 +239,9 @@ class PageController extends Controller
 		$save->stripe_secret_key = trim($request->stripe_secret_key);
 		$save->is_stripe = !empty($request->is_stripe) ? 1 : 0;
 		$save->is_cash_delivery = !empty($request->is_cash_delivery) ? 1 : 0;
+		$save->momo_partner_code = trim($request->momo_partner_code);
+		$save->momo_access_key = trim($request->momo_access_key);
+		$save->momo_secret_key = trim($request->momo_secret_key);
 		$save->save();
 		return redirect()->back()->with('success', 'Cài đặt thanh toán đã được cập nhật!');
 	}

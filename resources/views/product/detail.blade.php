@@ -204,7 +204,7 @@
 	</div><!-- End .product-details-tab -->
 
 	<div class="container">
-		<h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
+		<h2 class="title text-center mb-4">Có thể bạn quan tâm</h2><!-- End .title text-center -->
 		<div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" data-owl-options='{
                             "nav": false,
                             "dots": true,
@@ -251,9 +251,9 @@
 								thích</span></a>
 						@endif
 					</div>
-					<div class="product-action">
+					{{-- <div class="product-action">
 						<a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-					</div>
+					</div> --}}
 				</figure>
 				<div class="product-body">
 					<div class="product-cat">

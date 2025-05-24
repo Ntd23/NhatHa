@@ -25,9 +25,9 @@
 								thích</span></a>
 						@endif
             </div>
-            <div class="product-action">
-              <a href="#" class="btn-product btn-cart"><span>Thêm giỏ hàng</span></a>
-            </div>
+            {{-- <div class="product-action">
+              <button class="btn-product btn-cart"><span>Thêm giỏ hàng</span></button>
+            </div> --}}
           </figure>
           <div class="product-body">
             <div class="product-cat">

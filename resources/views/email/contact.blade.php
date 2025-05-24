@@ -6,3 +6,4 @@
   <p>Chủ đề: <b></b>{{ $user->phone }}</p>
   <p>Nội dung: <b></b>{{ $user->message }}</p>
 @endcomponent
+ 

@@ -41,19 +41,6 @@
                   Hiển thị <span> {{ $getProduct->perPage() }}/{{ $getProduct->total() }}</span> sản phẩm
                 </div>
               </div>
-              <div class="toolbox-right">
-                <div class="toolbox-sort">
-                  <label for="sortby">Sắp xếp theo:</label>
-                  <div class="select-custom">
-                    <select name="sortby" id="sortby" class="form-control ChangeSortBy">
-                      <option value="">Chọn</option>
-                      <option value="popularity" selected="selected">Most Popular</option>
-                      <option value="rating">Most Rated</option>
-                      <option value="date">Date</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
             </div>
             <div id="getProductAjax">
               @include('product._list')

@@ -32,6 +32,16 @@
   <li class="@if (Request::segment(2) === 'order') active @endif">
     <a href="{{ route('admin.order.index') }}"><i class="fa fa-shopping-cart"></i> <span>Đặt hàng</span></a>
   </li>
+	 <li class="menu-title">Người dùng</li>
+  <li class="@if (Request::segment(2) === 'admin') active @endif">
+    <a href="{{ route('admin.index') }}"><i class="fa fa-user"></i> <span>Quản trị viên</span></a>
+  </li>
+  <li class="@if (Request::segment(2) === 'customer') active @endif">
+    <a href="{{ route('admin.customer') }}"><i class="fa fa-users"></i> <span>Khách hàng</span></a>
+  </li>
+  <li class="@if (Request::segment(2) === 'contact') active @endif">
+    <a href="{{ route('admin.contact') }}"><i class="fa fa-envelope"></i> <span>Liên hệ</span></a>
+  </li>
   <li class="menu-title">Cài đặt</li>
   <li class="submenu">
     <a href="#"><i class="fa fa-cogs"></i><span>Cài đặt</span> <span class="menu-arrow"></span></a>
@@ -54,20 +64,7 @@
       <li class="@if (Request::segment(2) === 'system-setting') active @endif">
         <a href="{{ route('admin.system_setting') }}"><i class="fa fa-wrench"></i> <span>Chung</span></a>
       </li>
-      <li>
-        <a href="tabs.html"><i class="fa fa-th"></i> <span>Tabs</span></a>
-      </li>
     </ul>
-  </li>
-  <li class="menu-title">Extras</li>
-  <li class="@if (Request::segment(2) === 'admin') active @endif">
-    <a href="{{ route('admin.index') }}"><i class="fa fa-user"></i> <span>Quản trị viên</span></a>
-  </li>
-  <li class="@if (Request::segment(2) === 'customer') active @endif">
-    <a href="{{ route('admin.customer') }}"><i class="fa fa-users"></i> <span>Khách hàng</span></a>
-  </li>
-  <li class="@if (Request::segment(2) === 'contact') active @endif">
-    <a href="{{ route('admin.contact') }}"><i class="fa fa-envelope"></i> <span>Liên hệ</span></a>
   </li>
 </ul>
 
